@@ -56,15 +56,39 @@
 		0349D2B61E7CC02F00D87B62 /* Forget Me Knot */ = {
 			isa = PBXGroup;
 			children = (
-				0349D2B71E7CC02F00D87B62 /* AppDelegate.swift */,
-				0349D2B91E7CC02F00D87B62 /* GroceryListsViewController.swift */,
+				035558E51E7D2478002A4667 /* Supporting Files */,
+				035558E61E7D2485002A4667 /* Controller */,
+				035558E41E7D2463002A4667 /* View */,
+			);
+			path = "Forget Me Knot";
+			sourceTree = "<group>";
+		};
+		035558E41E7D2463002A4667 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				0349D2C91E7D073200D87B62 /* TabCell.swift */,
 				0349D2BB1E7CC02F00D87B62 /* Main.storyboard */,
 				0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */,
 				0349D2C01E7CC02F00D87B62 /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		035558E51E7D2478002A4667 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0349D2B71E7CC02F00D87B62 /* AppDelegate.swift */,
 				0349D2C31E7CC02F00D87B62 /* Info.plist */,
 			);
-			path = "Forget Me Knot";
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		035558E61E7D2485002A4667 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0349D2B91E7CC02F00D87B62 /* GroceryListsViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
