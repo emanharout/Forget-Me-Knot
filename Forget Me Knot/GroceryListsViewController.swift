@@ -19,10 +19,21 @@ class GroceryListsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupViews()
+  }
+  
+  func setupViews() {
+    setupFlowLayout()
+    setupNavigationBar()
+  }
+  
+  func setupFlowLayout() {
     flowLayout.scrollDirection = .horizontal
     flowLayout.estimatedItemSize = CGSize(width: 100, height: 50)
     flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-    
+  }
+  
+  func setupNavigationBar() {
     if let logoImage = UIImage(named: "Logo") {
       let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 36, height: 34))
       imageView.image = logoImage
