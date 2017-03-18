@@ -84,13 +84,13 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-yb-AYP" userLabel="Container View">
-                                <rect key="frame" x="0.0" y="110" width="320" height="175"/>
+                                <rect key="frame" x="0.0" y="110" width="320" height="174"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hero" translatesAutoresizingMaskIntoConstraints="NO" id="7YR-FM-ysh">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
+                                        <rect key="frame" x="0.0" y="-1" width="320" height="175"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="J20-F0-zZR">
-                                        <rect key="frame" x="105.5" y="23.5" width="110" height="128.5"/>
+                                        <rect key="frame" x="105.5" y="23" width="110" height="128.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Cooking!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB8-rf-6dn">
                                                 <rect key="frame" x="0.0" y="0.0" width="110" height="22"/>
@@ -119,12 +119,12 @@
                                     <constraint firstAttribute="trailing" secondItem="7YR-FM-ysh" secondAttribute="trailing" id="Gm3-98-2jZ"/>
                                     <constraint firstItem="J20-F0-zZR" firstAttribute="centerX" secondItem="eU5-yb-AYP" secondAttribute="centerX" id="Tkz-qo-Tja"/>
                                     <constraint firstItem="J20-F0-zZR" firstAttribute="centerY" secondItem="eU5-yb-AYP" secondAttribute="centerY" id="ZY3-Ln-qUq"/>
-                                    <constraint firstItem="7YR-FM-ysh" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="top" id="ao4-B8-5Ff"/>
+                                    <constraint firstItem="7YR-FM-ysh" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="top" constant="-1" id="ao4-B8-5Ff"/>
                                     <constraint firstItem="7YR-FM-ysh" firstAttribute="leading" secondItem="eU5-yb-AYP" secondAttribute="leading" id="eth-ZV-j5g"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eDu-0c-Kdi">
-                                <rect key="frame" x="0.0" y="285" width="320" height="283"/>
+                                <rect key="frame" x="0.0" y="284" width="320" height="284"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" textLabel="fOD-tM-Bss" style="IBUITableViewCellStyleDefault" id="mBU-DW-xfv">
@@ -167,12 +167,17 @@
                             <constraint firstItem="eU5-yb-AYP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yZK-HC-QuB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7MX-iO-IhS"/>
+                    <navigationItem key="navigationItem" id="7MX-iO-IhS">
+                        <barButtonItem key="rightBarButtonItem" title="NEW LIST" id="1CN-VL-vuo">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
                         <outlet property="listDescriptionLabel" destination="ASv-e0-GZN" id="mPG-9p-1o0"/>
                         <outlet property="listNameLabel" destination="1Ws-yy-eLc" id="ojt-6o-7QY"/>
+                        <outlet property="newListBarButtonItem" destination="1CN-VL-vuo" id="aD0-8H-Hb4"/>
                         <outlet property="noListsStackView" destination="ssP-Fh-a9Q" id="kpC-Oh-j8W"/>
                     </connections>
                 </viewController>
@@ -189,6 +194,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W9Z-N0-dud">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.72549019607843135" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
