@@ -64,12 +64,15 @@ class GroceryListsViewController: UIViewController {
 extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
+    
+    let groceryList = groceryLists[indexPath.item]
+    cell.listLabel.text = groceryList.name
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return groceryLists.count
   }
   
 }
