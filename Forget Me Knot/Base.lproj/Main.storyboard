@@ -46,6 +46,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7MX-iO-IhS"/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="noListsStackView" destination="ssP-Fh-a9Q" id="kpC-Oh-j8W"/>
                     </connections>
@@ -59,6 +60,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D0A-It-sAn" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W9Z-N0-dud">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
