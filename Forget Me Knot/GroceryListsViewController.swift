@@ -28,6 +28,15 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
+    
+    if groceryLists.isEmpty {
+      for view in view.subviews {
+        view.isHidden = true
+      }
+      noListsStackView.isHidden = false
+    } else {
+      noListsStackView.isHidden = true
+    }
   }
   
   func setupFlowLayout() {
