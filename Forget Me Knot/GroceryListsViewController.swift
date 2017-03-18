@@ -14,6 +14,7 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
+  @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,6 +29,11 @@ class GroceryListsViewController: UIViewController {
       imageView.contentMode = .scaleAspectFit
       navigationItem.titleView = imageView
     }
+    
+    let font = UIFont(name: "Avenir-Light", size: 22)
+    let attributes = [NSFontAttributeName: font!,
+                      NSKernAttributeName : CGFloat(10.0)] as [String : Any]
+    newListBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
   }
 
 }
