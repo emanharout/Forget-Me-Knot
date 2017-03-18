@@ -39,10 +39,10 @@
                                 </subviews>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="C2W-n4-dZS">
-                                <rect key="frame" x="0.0" y="44" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="66"/>
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.48627450980392156" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Ws0-Rs-Jof"/>
+                                    <constraint firstAttribute="height" constant="66" id="Ws0-Rs-Jof"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BCV-ZO-6fh">
                                     <size key="itemSize" width="70" height="50"/>

@@ -16,6 +16,9 @@ class GroceryListsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    flowLayout.scrollDirection = .horizontal
+    flowLayout.estimatedItemSize = CGSize(width: 100, height: 50)
+    flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
   }
 
 }
