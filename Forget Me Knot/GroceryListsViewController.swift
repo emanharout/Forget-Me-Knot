@@ -10,6 +10,8 @@ import UIKit
 
 class GroceryListsViewController: UIViewController {
 
+  @IBOutlet weak var noListsStackView: UIStackView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
