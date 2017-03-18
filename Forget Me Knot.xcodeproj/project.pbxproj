@@ -12,6 +12,7 @@
 		0349D2BD1E7CC02F00D87B62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0349D2BB1E7CC02F00D87B62 /* Main.storyboard */; };
 		0349D2BF1E7CC02F00D87B62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */; };
 		0349D2C21E7CC02F00D87B62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0349D2C01E7CC02F00D87B62 /* LaunchScreen.storyboard */; };
+		0349D2CA1E7D073200D87B62 /* TabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349D2C91E7D073200D87B62 /* TabCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0349D2C11E7CC02F00D87B62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0349D2C31E7CC02F00D87B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0349D2C91E7D073200D87B62 /* TabCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				0349D2B71E7CC02F00D87B62 /* AppDelegate.swift */,
 				0349D2B91E7CC02F00D87B62 /* GroceryListsViewController.swift */,
+				0349D2C91E7D073200D87B62 /* TabCell.swift */,
 				0349D2BB1E7CC02F00D87B62 /* Main.storyboard */,
 				0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */,
 				0349D2C01E7CC02F00D87B62 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				0349D2BA1E7CC02F00D87B62 /* GroceryListsViewController.swift in Sources */,
 				0349D2B81E7CC02F00D87B62 /* AppDelegate.swift in Sources */,
+				0349D2CA1E7D073200D87B62 /* TabCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
