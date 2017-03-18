@@ -16,6 +16,9 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var listDescriptionLabel: UILabel!
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
   
+  var groceryLists = [GroceryList(name: "Desserts", description: "Sugar rush after a good meal", items: [Item(name: "Cake", id: 1), Item(name: "Ice Cream", id: 2)]),
+                      GroceryList(name: "Pies", description: "A treat for everyone", items: [Item(name: "Pumpkin Pie", id: 3), Item(name: "Apple Pie", id: 4)])]
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -25,6 +28,15 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
+    
+    if groceryLists.isEmpty {
+      for view in view.subviews {
+        view.isHidden = true
+      }
+      noListsStackView.isHidden = false
+    } else {
+      noListsStackView.isHidden = true
+    }
   }
   
   func setupFlowLayout() {
@@ -52,12 +64,15 @@ class GroceryListsViewController: UIViewController {
 extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
+    
+    let groceryList = groceryLists[indexPath.item]
+    cell.listLabel.text = groceryList.name
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return groceryLists.count
   }
   
 }
