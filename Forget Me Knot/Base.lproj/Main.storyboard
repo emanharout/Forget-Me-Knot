@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ssP-Fh-a9Q">
-                                <rect key="frame" x="81" y="256" width="158" height="56.5"/>
+                                <rect key="frame" x="81" y="256.5" width="158" height="56.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Lists Yet..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmH-NN-R0b">
                                         <rect key="frame" x="7.5" y="0.0" width="143.5" height="33"/>
@@ -83,20 +83,83 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="HEe-dt-3Cd"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-yb-AYP" userLabel="Container View">
+                                <rect key="frame" x="0.0" y="110" width="320" height="175"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hero" translatesAutoresizingMaskIntoConstraints="NO" id="7YR-FM-ysh">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="J20-F0-zZR">
+                                        <rect key="frame" x="105.5" y="23.5" width="110" height="128.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Cooking!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB8-rf-6dn">
+                                                <rect key="frame" x="0.0" y="0.0" width="110" height="22"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ws-yy-eLc">
+                                                <rect key="frame" x="0.0" y="30" width="110" height="68.5"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="50"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ASv-e0-GZN">
+                                                <rect key="frame" x="0.0" y="106.5" width="110" height="22"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="7YR-FM-ysh" secondAttribute="bottom" id="8Ni-4n-F8s"/>
+                                    <constraint firstAttribute="trailing" secondItem="7YR-FM-ysh" secondAttribute="trailing" id="Gm3-98-2jZ"/>
+                                    <constraint firstItem="J20-F0-zZR" firstAttribute="centerX" secondItem="eU5-yb-AYP" secondAttribute="centerX" id="Tkz-qo-Tja"/>
+                                    <constraint firstItem="J20-F0-zZR" firstAttribute="centerY" secondItem="eU5-yb-AYP" secondAttribute="centerY" id="ZY3-Ln-qUq"/>
+                                    <constraint firstItem="7YR-FM-ysh" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="top" id="ao4-B8-5Ff"/>
+                                    <constraint firstItem="7YR-FM-ysh" firstAttribute="leading" secondItem="eU5-yb-AYP" secondAttribute="leading" id="eth-ZV-j5g"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eDu-0c-Kdi">
+                                <rect key="frame" x="0.0" y="285" width="320" height="283"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mBU-DW-xfv">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mBU-DW-xfv" id="lUY-8R-ZuJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="eDu-0c-Kdi" secondAttribute="trailing" id="6YJ-nB-IE6"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="81C-GV-G1d"/>
+                            <constraint firstAttribute="trailing" secondItem="eU5-yb-AYP" secondAttribute="trailing" id="8Ay-dy-72g"/>
                             <constraint firstAttribute="trailing" secondItem="C2W-n4-dZS" secondAttribute="trailing" id="8ki-5d-81n"/>
+                            <constraint firstItem="eU5-yb-AYP" firstAttribute="top" secondItem="C2W-n4-dZS" secondAttribute="bottom" id="BhK-70-SVi"/>
                             <constraint firstItem="C2W-n4-dZS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="CuO-27-1zg"/>
+                            <constraint firstItem="eDu-0c-Kdi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Dya-RN-Hnl"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EQX-aW-VzE"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eDu-0c-Kdi" secondAttribute="bottom" id="O9h-kH-4r0"/>
                             <constraint firstItem="C2W-n4-dZS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gtr-BS-SKJ"/>
+                            <constraint firstItem="eDu-0c-Kdi" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="bottom" id="rJp-JL-v86"/>
+                            <constraint firstItem="eU5-yb-AYP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yZK-HC-QuB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7MX-iO-IhS"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
+                        <outlet property="listDescriptionLabel" destination="ASv-e0-GZN" id="mPG-9p-1o0"/>
+                        <outlet property="listNameLabel" destination="1Ws-yy-eLc" id="ojt-6o-7QY"/>
                         <outlet property="noListsStackView" destination="ssP-Fh-a9Q" id="kpC-Oh-j8W"/>
                     </connections>
                 </viewController>
@@ -124,4 +187,7 @@
             <point key="canvasLocation" x="397.5" y="-662.32394366197184"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="hero" width="375" height="175"/>
+    </resources>
 </document>

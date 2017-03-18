@@ -12,6 +12,8 @@ class GroceryListsViewController: UIViewController {
 
   @IBOutlet weak var noListsStackView: UIStackView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+  @IBOutlet weak var listNameLabel: UILabel!
+  @IBOutlet weak var listDescriptionLabel: UILabel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
