@@ -11,6 +11,7 @@ import UIKit
 class GroceryListsViewController: UIViewController {
 
   @IBOutlet weak var noListsStackView: UIStackView!
+  @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -19,3 +20,15 @@ class GroceryListsViewController: UIViewController {
 
 }
 
+extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath)
+    return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+  
+}

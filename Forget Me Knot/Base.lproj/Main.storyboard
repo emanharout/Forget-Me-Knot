@@ -38,16 +38,47 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="C2W-n4-dZS">
+                                <rect key="frame" x="0.0" y="44" width="320" height="50"/>
+                                <color key="backgroundColor" red="0.83921568627450982" green="0.48627450980392156" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Ws0-Rs-Jof"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BCV-ZO-6fh">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="e8b-g5-Ox9">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="hDw-Sz-1Hn"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="HEe-dt-3Cd"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="81C-GV-G1d"/>
+                            <constraint firstAttribute="trailing" secondItem="C2W-n4-dZS" secondAttribute="trailing" id="8ki-5d-81n"/>
+                            <constraint firstItem="C2W-n4-dZS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="CuO-27-1zg"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EQX-aW-VzE"/>
+                            <constraint firstItem="C2W-n4-dZS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gtr-BS-SKJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7MX-iO-IhS"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
                         <outlet property="noListsStackView" destination="ssP-Fh-a9Q" id="kpC-Oh-j8W"/>
                     </connections>
                 </viewController>
