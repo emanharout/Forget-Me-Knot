@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -170,6 +171,9 @@
                     <navigationItem key="navigationItem" id="7MX-iO-IhS">
                         <barButtonItem key="rightBarButtonItem" title="NEW LIST" id="1CN-VL-vuo">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="1sx-Qn-hju" kind="show" identifier="showAddListViewController" id="A2Q-ze-9tp"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -184,6 +188,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1215" y="-662"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AcB-Fp-Al6">
+            <objects>
+                <viewController id="1sx-Qn-hju" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RgW-yX-6pS"/>
+                        <viewControllerLayoutGuide type="bottom" id="uEx-ud-9Ha"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sDX-Jq-TN2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0B-kf-2r6" userLabel="Header Container">
+                                <rect key="frame" x="0.0" y="44" width="320" height="132"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-vQ-tXK">
+                                        <rect key="frame" x="0.0" y="29.5" width="320" height="73"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter List Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igR-et-osI">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="26"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9F-FJ-SMx" userLabel="Divider">
+                                                <rect key="frame" x="24" y="44" width="272" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="0.29840004280821919" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="G6c-BN-GV8"/>
+                                                </constraints>
+                                            </view>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Describe Your List" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mbw-kR-bI9">
+                                                <rect key="frame" x="0.0" y="53" width="320" height="20"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="y9F-FJ-SMx" firstAttribute="width" secondItem="qiH-vQ-tXK" secondAttribute="width" multiplier="0.85" id="7JL-QS-Pbt"/>
+                                            <constraint firstItem="mbw-kR-bI9" firstAttribute="leading" secondItem="qiH-vQ-tXK" secondAttribute="leading" id="9n0-5N-Tov"/>
+                                            <constraint firstItem="igR-et-osI" firstAttribute="leading" secondItem="qiH-vQ-tXK" secondAttribute="leading" id="BgP-4i-Nrm"/>
+                                            <constraint firstAttribute="trailing" secondItem="mbw-kR-bI9" secondAttribute="trailing" id="Hkm-Uh-06v"/>
+                                            <constraint firstAttribute="trailing" secondItem="igR-et-osI" secondAttribute="trailing" id="ooW-py-cVK"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="2Pa-l6-aW9"/>
+                                    <constraint firstAttribute="trailing" secondItem="qiH-vQ-tXK" secondAttribute="trailing" id="8Kn-2f-2kY"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qiH-vQ-tXK" secondAttribute="bottom" constant="12" id="LUd-VE-f7S"/>
+                                    <constraint firstItem="qiH-vQ-tXK" firstAttribute="leading" secondItem="d0B-kf-2r6" secondAttribute="leading" id="d8h-2u-uki"/>
+                                    <constraint firstItem="qiH-vQ-tXK" firstAttribute="centerY" secondItem="d0B-kf-2r6" secondAttribute="centerY" id="scx-qa-VWe"/>
+                                    <constraint firstItem="qiH-vQ-tXK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d0B-kf-2r6" secondAttribute="top" constant="12" id="yjt-6G-12W"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d0B-kf-2r6" firstAttribute="top" secondItem="RgW-yX-6pS" secondAttribute="bottom" id="Gms-GG-n55"/>
+                            <constraint firstAttribute="trailing" secondItem="d0B-kf-2r6" secondAttribute="trailing" id="gZg-UG-u30"/>
+                            <constraint firstItem="d0B-kf-2r6" firstAttribute="leading" secondItem="sDX-Jq-TN2" secondAttribute="leading" id="pn1-T0-JVN"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Zs-mA-DhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2188" y="-662"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qEh-xO-WwS">
