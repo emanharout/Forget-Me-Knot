@@ -10,13 +10,16 @@ import UIKit
 
 class AddListViewController: UIViewController {
   
+  
+  @IBOutlet weak var nameTextField: UITextField!
+  @IBOutlet weak var descriptionTextField: UITextField!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var doneButton: UIButton!
   
   var client: Client!
   var items = [Item]()
   // TODO: See if we can replace with Set
-  var selectedItemIds = [Int]()
+  var selectedItems = [Item]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -54,7 +57,13 @@ class AddListViewController: UIViewController {
   }
   
   @IBAction func createList(_ sender: UIButton) {
+    guard let name = nameTextField.text, let description = descriptionTextField.text else { return }
     
+    let groceryList = GroceryList(name: name, description: description, items: selectedItems)
+    client.upload(groceryList: groceryList) { (result, error) in
+      print(error)
+      print(result)
+    }
   }
 }
 
@@ -84,13 +93,13 @@ extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
     
     if item.isSelected {
       cell?.accessoryType = .checkmark
-      selectedItemIds.append(item.id)
+      selectedItems.append(item)
     } else if !item.isSelected {
       cell?.accessoryType = .none
       
-      for (index, itemId) in selectedItemIds.enumerated() {
-        if itemId == item.id {
-          selectedItemIds.remove(at: index)
+      for (index, selectedItem) in selectedItems.enumerated() {
+        if item === selectedItem {
+          selectedItems.remove(at: index)
         }
       }
     }
