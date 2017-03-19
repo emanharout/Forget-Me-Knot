@@ -16,6 +16,13 @@ class AddListViewController: UIViewController {
     super.viewDidLoad()
     
     setupNavigationBar()
+    client.fetchItems { (result, error) in
+      if let result = result {
+        print(result)
+      } else {
+        print(error)
+      }
+    }
   }
   
   func setupNavigationBar() {
