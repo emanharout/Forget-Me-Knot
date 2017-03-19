@@ -56,13 +56,32 @@ class AddListViewController: UIViewController {
     }
   }
   
+  func displayAlert(with title: String, and message: String, completionHandler: (_ alertController: UIAlertController)->Void) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alert.addAction(action)
+    present(alert, animated: true, completion: nil)
+  }
+  
   @IBAction func createList(_ sender: UIButton) {
     guard let name = nameTextField.text, let description = descriptionTextField.text else { return }
     
     let groceryList = GroceryList(name: name, description: description, items: selectedItems)
-    client.upload(groceryList: groceryList) { (result, error) in
-      print(error)
-      print(result)
+    client.upload(groceryList: groceryList) { (success, result) in
+      
+      guard success == true else {
+        if let result = result as? [String: Any], let message = result["message"] as? String {
+          self.displayAlert(with: "Upload Failed", and: message) { (alertController) in
+            self.dismiss(animated: true, completion: nil)
+          }
+        } else {
+          self.displayAlert(with: "Upload Failed", and: "Experiencing networking issues") { (alertController) in
+            self.dismiss(animated: true, completion: nil)
+          }
+        }
+        return
+      }
+      _ = self.navigationController?.popViewController(animated: true)
     }
   }
 }
