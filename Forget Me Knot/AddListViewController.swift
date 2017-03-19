@@ -84,6 +84,7 @@ class AddListViewController: UIViewController {
           }
           return
         }
+        self.delegate?.userDidCreateGroceryList()
         _ = self.navigationController?.popViewController(animated: true)
       }
     }

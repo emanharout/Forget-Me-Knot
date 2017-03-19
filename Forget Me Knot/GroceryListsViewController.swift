@@ -17,8 +17,7 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
   
   var client: Client!
-  var groceryLists = [GroceryList(name: "Desserts", description: "Sugar rush after a good meal", items: [Item(name: "Cake", id: 1), Item(name: "Ice Cream", id: 2)]),
-                      GroceryList(name: "Pies", description: "A treat for everyone", items: [Item(name: "Pumpkin Pie", id: 3), Item(name: "Apple Pie", id: 4)])]
+  var groceryLists = [GroceryList]()
   var items = [Item]()
   
   override func viewDidLoad() {
@@ -107,6 +106,31 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    
+    client.fetchGroceryLists { (result, error) in
+      guard let result = result as? [[String: Any]] else {
+        // TODO: Handle Error
+        return
+      }
+      
+      var groceryLists = [GroceryList]()
+      for groceryListDictionary in result {
+        var items = [Item]()
+        
+        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
+          for itemDictionary in itemsDictionary {
+            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
+              let item = Item(name: name, id: id)
+              items.append(item)
+            }
+          }
+        }
+        
+        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
+          let groceryList = GroceryList(name: name, description: description, items: items)
+          groceryLists.append(groceryList)
+        }
+      }
+      self.groceryLists = groceryLists
+    }
   }
 }
