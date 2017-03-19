@@ -131,6 +131,19 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
         }
       }
       self.groceryLists = groceryLists
+      DispatchQueue.main.async {
+        if self.groceryLists.isEmpty {
+          for view in self.view.subviews {
+            view.isHidden = true
+          }
+          self.noListsStackView.isHidden = false
+        } else {
+          for view in self.view.subviews {
+            view.isHidden = false
+          }
+          self.noListsStackView.isHidden = true
+        }
+      }
     }
   }
 }
