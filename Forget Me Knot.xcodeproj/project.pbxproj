@@ -15,6 +15,7 @@
 		0349D2CA1E7D073200D87B62 /* TabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349D2C91E7D073200D87B62 /* TabCell.swift */; };
 		035558E91E7DE6D0002A4667 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558E81E7DE6D0002A4667 /* Item.swift */; };
 		035558EB1E7DE71C002A4667 /* GroceryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558EA1E7DE71C002A4667 /* GroceryList.swift */; };
+		035558ED1E7E0033002A4667 /* AddListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558EC1E7E0033002A4667 /* AddListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		0349D2C91E7D073200D87B62 /* TabCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabCell.swift; sourceTree = "<group>"; };
 		035558E81E7DE6D0002A4667 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		035558EA1E7DE71C002A4667 /* GroceryList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroceryList.swift; sourceTree = "<group>"; };
+		035558EC1E7E0033002A4667 /* AddListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				0349D2C91E7D073200D87B62 /* TabCell.swift */,
 				0349D2BB1E7CC02F00D87B62 /* Main.storyboard */,
+				035558EC1E7E0033002A4667 /* AddListViewController.swift */,
 				0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */,
 				0349D2C01E7CC02F00D87B62 /* LaunchScreen.storyboard */,
 			);
@@ -177,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				035558ED1E7E0033002A4667 /* AddListViewController.swift in Sources */,
 				035558E91E7DE6D0002A4667 /* Item.swift in Sources */,
 				0349D2BA1E7CC02F00D87B62 /* GroceryListsViewController.swift in Sources */,
 				035558EB1E7DE71C002A4667 /* GroceryList.swift in Sources */,
