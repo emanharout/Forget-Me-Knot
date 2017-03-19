@@ -12,6 +12,14 @@ class TabCell: UICollectionViewCell {
   
   @IBOutlet weak var listLabel: UILabel!
   
+  var groceryList: GroceryList? {
+    didSet {
+      if let groceryList = groceryList {
+        listLabel?.text = groceryList.name
+      }
+    }
+  }
+  
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     

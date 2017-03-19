@@ -83,7 +83,8 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
     
     let groceryList = groceryLists[indexPath.item]
-    cell.listLabel.text = groceryList.name
+    cell.groceryList = groceryList
+    
     return cell
   }
   
