@@ -56,15 +56,16 @@ class Client {
     request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
     
     let items = groceryList.items
-    var itemsJSONArray = " ["
+    var itemsJSONArray = ""
     for item in items {
       let itemJSONString = "{\"item_id\": \(item.id)},"
       itemsJSONArray.append(itemJSONString)
     }
-    var trimmedItemsJSON = itemsJSONArray.trimmingCharacters(in: CharacterSet.punctuationCharacters)
-    trimmedItemsJSON.append("]")
+    let trimmedItemsJSON = itemsJSONArray.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+    let itemsJSON = "[\(trimmedItemsJSON)]"
     
-    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(trimmedItemsJSON)}}"
+    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
+    print(body)
     request.httpBody = body.data(using: .utf8)
     
     let session = URLSession.shared
