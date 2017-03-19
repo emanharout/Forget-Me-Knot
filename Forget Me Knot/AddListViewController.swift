@@ -11,6 +11,7 @@ import UIKit
 class AddListViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var doneButton: UIButton!
   
   var client: Client!
   var items = [Item]()
@@ -52,6 +53,9 @@ class AddListViewController: UIViewController {
     }
   }
   
+  @IBAction func createList(_ sender: UIButton) {
+    
+  }
 }
 
 extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
