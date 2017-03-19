@@ -26,6 +26,13 @@ class GroceryListsViewController: UIViewController {
     setupViews()
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "showAddListViewController" {
+      guard let destinationViewController = segue.destination as? AddListViewController else { return }
+      destinationViewController.client = client
+    }
+  }
+  
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
@@ -60,8 +67,6 @@ class GroceryListsViewController: UIViewController {
     newListBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
   }
   
-  
-
 }
 
 extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {

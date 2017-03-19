@@ -10,6 +10,8 @@ import UIKit
 
 class AddListViewController: UIViewController {
   
+  var client: Client!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     

@@ -77,7 +77,6 @@
 			children = (
 				0349D2C91E7D073200D87B62 /* TabCell.swift */,
 				0349D2BB1E7CC02F00D87B62 /* Main.storyboard */,
-				035558EC1E7E0033002A4667 /* AddListViewController.swift */,
 				0349D2BE1E7CC02F00D87B62 /* Assets.xcassets */,
 				0349D2C01E7CC02F00D87B62 /* LaunchScreen.storyboard */,
 			);
@@ -97,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				0349D2B91E7CC02F00D87B62 /* GroceryListsViewController.swift */,
+				035558EC1E7E0033002A4667 /* AddListViewController.swift */,
 				035558EE1E7E0CAE002A4667 /* Client.swift */,
 			);
 			name = Controller;
