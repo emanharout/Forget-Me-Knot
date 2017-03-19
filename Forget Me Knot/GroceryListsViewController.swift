@@ -30,6 +30,7 @@ class GroceryListsViewController: UIViewController {
     if segue.identifier == "showAddListViewController" {
       guard let destinationViewController = segue.destination as? AddListViewController else { return }
       destinationViewController.client = client
+      destinationViewController.delegate = self
     }
   }
   
@@ -96,4 +97,15 @@ extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource
     return 10
   }
   
+}
+
+extension GroceryListsViewController: AddListViewControllerDelegate {
+  
+  func update(items: [Item]) {
+    
+  }
+  
+  func userDidCreateGroceryList() {
+    
+  }
 }

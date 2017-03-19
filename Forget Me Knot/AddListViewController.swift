@@ -20,6 +20,7 @@ class AddListViewController: UIViewController {
   var items = [Item]()
   // TODO: See if we can replace with Set
   var selectedItems = [Item]()
+  weak var delegate: AddListViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -137,4 +138,9 @@ extension AddListViewController: UITextFieldDelegate {
     textField.resignFirstResponder()
     return false
   }
+}
+
+protocol AddListViewControllerDelegate: class {
+  func update(items: [Item])
+  func userDidCreateGroceryList()
 }
