@@ -8,9 +8,16 @@
 
 import Foundation
 
-struct Item {
+class Item {
   
   let name: String
   let id: Int
+  var isSelected: Bool
+  
+  init(name: String, id: Int, isSelected: Bool = false) {
+    self.name = name
+    self.id = id
+    self.isSelected = isSelected
+  }
   
 }

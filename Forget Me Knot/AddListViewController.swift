@@ -10,10 +10,16 @@ import UIKit
 
 class AddListViewController: UIViewController {
   
+  
+  @IBOutlet weak var nameTextField: UITextField!
+  @IBOutlet weak var descriptionTextField: UITextField!
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var doneButton: UIButton!
   
   var client: Client!
   var items = [Item]()
+  // TODO: See if we can replace with Set
+  var selectedItems = [Item]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,6 +56,36 @@ class AddListViewController: UIViewController {
     }
   }
   
+  func displayAlert(with title: String, and message: String, completionHandler: (_ alertController: UIAlertController)->Void) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alert.addAction(action)
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @IBAction func createList(_ sender: UIButton) {
+    guard let name = nameTextField.text, let description = descriptionTextField.text else { return }
+    
+    let groceryList = GroceryList(name: name, description: description, items: selectedItems)
+    client.upload(groceryList: groceryList) { (success, result) in
+      
+      DispatchQueue.main.async {
+        guard success == true else {
+          if let result = result as? [String: Any], let message = result["message"] as? String {
+            self.displayAlert(with: "Upload Failed", and: message) { (alertController) in
+              self.dismiss(animated: true, completion: nil)
+            }
+          } else {
+            self.displayAlert(with: "Upload Failed", and: "Experiencing networking issues") { (alertController) in
+              self.dismiss(animated: true, completion: nil)
+            }
+          }
+          return
+        }
+        _ = self.navigationController?.popViewController(animated: true)
+      }
+    }
+  }
 }
 
 extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -60,11 +96,45 @@ extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
     let item = items[indexPath.row]
     cell.item = item
     
+    if item.isSelected {
+      cell.accessoryType = .checkmark
+    } else if !item.isSelected {
+      cell.accessoryType = .none
+    }
+    
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let cell = tableView.cellForRow(at: indexPath)
+    let item = items[indexPath.row]
+    
+    item.isSelected = !item.isSelected
+    
+    if item.isSelected {
+      cell?.accessoryType = .checkmark
+      selectedItems.append(item)
+    } else if !item.isSelected {
+      cell?.accessoryType = .none
+      
+      for (index, selectedItem) in selectedItems.enumerated() {
+        if item === selectedItem {
+          selectedItems.remove(at: index)
+        }
+      }
+    }
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return items.count
   }
   
+}
+
+extension AddListViewController: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return false
+  }
 }

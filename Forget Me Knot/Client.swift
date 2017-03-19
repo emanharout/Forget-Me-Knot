@@ -48,4 +48,55 @@ class Client {
     task.resume()
   }
   
+  func upload(groceryList: GroceryList, completionHandler: @escaping (_ success: Bool, _ result: Any?)->Void) {
+    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+    
+    let items = groceryList.items
+    var itemsJSONArray = ""
+    if !items.isEmpty {
+      for item in items {
+        let itemJSONString = "{\"item_id\": \(item.id)},"
+        itemsJSONArray.append(itemJSONString)
+      }
+    }
+    
+    if items.count > 0 {
+      itemsJSONArray.remove(at: itemsJSONArray.index(before: itemsJSONArray.endIndex))
+    }
+    let itemsJSON = "[\(itemsJSONArray)]"
+    
+    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
+    request.httpBody = body.data(using: .utf8)
+    
+    let session = URLSession.shared
+    let task = session.dataTask(with: request) { (data, response, error) in
+      
+      guard error == nil else {
+        completionHandler(false, nil)
+        return
+      }
+      
+      guard let data = data else { return }
+      
+      do {
+        guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+          completionHandler(false, nil)
+          return
+        }
+        
+        if json["errors"] != nil {
+          completionHandler(false, json)
+        } else {
+          completionHandler(true, json)
+        }
+      } catch {
+      }
+    }
+    task.resume()
+  }
+  
 }

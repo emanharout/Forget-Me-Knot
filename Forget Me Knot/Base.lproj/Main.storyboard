@@ -207,12 +207,15 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qiH-vQ-tXK">
                                         <rect key="frame" x="0.0" y="29.5" width="320" height="73"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter List Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igR-et-osI">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter List Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igR-et-osI">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="26"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="1sx-Qn-hju" id="FQR-Hy-NCM"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9F-FJ-SMx" userLabel="Divider">
                                                 <rect key="frame" x="24" y="44" width="272" height="1"/>
@@ -221,12 +224,15 @@
                                                     <constraint firstAttribute="height" constant="1" id="G6c-BN-GV8"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Describe Your List" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mbw-kR-bI9">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Describe Your List" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mbw-kR-bI9">
                                                 <rect key="frame" x="0.0" y="53" width="320" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="1sx-Qn-hju" id="W6M-x5-od0"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -249,7 +255,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ina-9W-lnO">
-                                <rect key="frame" x="0.0" y="176" width="320" height="392"/>
+                                <rect key="frame" x="0.0" y="176" width="320" height="348"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" id="x9z-QX-g0C" customClass="ItemCell" customModule="Forget_Me_Knot" customModuleProvider="target">
@@ -266,26 +272,54 @@
                                     <outlet property="delegate" destination="1sx-Qn-hju" id="beZ-2k-6Pz"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Bn-aH-DSJ">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <color key="backgroundColor" red="0.83921568627450982" green="0.40392156862745099" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="YWN-RY-8pm"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="DONE!">
+                                            <attributes>
+                                                <font key="NSFont" size="22" name="Avenir-Light"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <action selector="createList:" destination="1sx-Qn-hju" eventType="touchUpInside" id="j0g-dW-wHO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ina-9W-lnO" firstAttribute="leading" secondItem="sDX-Jq-TN2" secondAttribute="leading" id="3KE-LK-LM1"/>
                             <constraint firstItem="Ina-9W-lnO" firstAttribute="top" secondItem="d0B-kf-2r6" secondAttribute="bottom" id="BYH-7x-hdQ"/>
                             <constraint firstItem="d0B-kf-2r6" firstAttribute="top" secondItem="RgW-yX-6pS" secondAttribute="bottom" id="Gms-GG-n55"/>
+                            <constraint firstItem="9Bn-aH-DSJ" firstAttribute="leading" secondItem="sDX-Jq-TN2" secondAttribute="leading" id="HAa-Bx-Sam"/>
+                            <constraint firstAttribute="trailing" secondItem="9Bn-aH-DSJ" secondAttribute="trailing" id="Mg1-th-6Kq"/>
+                            <constraint firstItem="uEx-ud-9Ha" firstAttribute="top" secondItem="9Bn-aH-DSJ" secondAttribute="bottom" id="buT-Sg-q4P"/>
                             <constraint firstAttribute="trailing" secondItem="d0B-kf-2r6" secondAttribute="trailing" id="gZg-UG-u30"/>
-                            <constraint firstItem="uEx-ud-9Ha" firstAttribute="top" secondItem="Ina-9W-lnO" secondAttribute="bottom" id="mjJ-qP-PvQ"/>
+                            <constraint firstItem="uEx-ud-9Ha" firstAttribute="top" secondItem="Ina-9W-lnO" secondAttribute="bottom" priority="750" id="mjJ-qP-PvQ"/>
                             <constraint firstItem="d0B-kf-2r6" firstAttribute="leading" secondItem="sDX-Jq-TN2" secondAttribute="leading" id="pn1-T0-JVN"/>
                             <constraint firstAttribute="trailing" secondItem="Ina-9W-lnO" secondAttribute="trailing" id="tt1-Wt-JKr"/>
+                            <constraint firstItem="9Bn-aH-DSJ" firstAttribute="top" secondItem="Ina-9W-lnO" secondAttribute="bottom" id="vnf-zy-Nvh"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="descriptionTextField" destination="mbw-kR-bI9" id="QTr-bh-Nl2"/>
+                        <outlet property="doneButton" destination="9Bn-aH-DSJ" id="qm1-3Q-v52"/>
+                        <outlet property="nameTextField" destination="igR-et-osI" id="HA9-R0-HHx"/>
                         <outlet property="tableView" destination="Ina-9W-lnO" id="EHJ-VB-Dal"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Zs-mA-DhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2188" y="-662"/>
+            <point key="canvasLocation" x="2186.25" y="-662.32394366197184"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qEh-xO-WwS">
