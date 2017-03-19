@@ -13,6 +13,16 @@ class AddListViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupNavigationBar()
+  }
+  
+  func setupNavigationBar() {
+    if let logoImage = UIImage(named: "Logo") {
+      let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 36, height: 34))
+      imageView.image = logoImage
+      imageView.contentMode = .scaleAspectFit
+      navigationItem.titleView = imageView
+    }
   }
   
 }
