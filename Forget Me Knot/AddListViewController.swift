@@ -10,6 +10,8 @@ import UIKit
 
 class AddListViewController: UIViewController {
   
+  @IBOutlet weak var tableView: UITableView!
+  
   var client: Client!
   var items = [Item]()
   
@@ -29,6 +31,10 @@ class AddListViewController: UIViewController {
           }
         }
         
+        let mainQueue = DispatchQueue.main
+        mainQueue.async {
+          self.tableView.reloadData()
+        }
       } else if let error = error {
         print(error)
       }
@@ -50,11 +56,15 @@ extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    
+    let item = items[indexPath.row]
+    cell.textLabel?.text = item.name
+    
     return cell
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5
+    return items.count
   }
   
 }

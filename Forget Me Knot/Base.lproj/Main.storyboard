@@ -279,6 +279,9 @@
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="Ina-9W-lnO" id="EHJ-VB-Dal"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Zs-mA-DhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
