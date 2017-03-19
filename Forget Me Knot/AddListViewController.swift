@@ -11,6 +11,7 @@ import UIKit
 class AddListViewController: UIViewController {
   
   var client: Client!
+  var items = [Item]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -18,8 +19,17 @@ class AddListViewController: UIViewController {
     setupNavigationBar()
     client.fetchItems { (result, error) in
       if let result = result {
-        print(result)
-      } else {
+        
+        guard let itemsArray = result as? [[String: Any]] else { return }
+        
+        for item in itemsArray {
+          if let name = item["name"] as? String, let id = item["id"] as? Int {
+            let item = Item(name: name, id: id)
+            self.items.append(item)
+          }
+        }
+        
+      } else if let error = error {
         print(error)
       }
     }
