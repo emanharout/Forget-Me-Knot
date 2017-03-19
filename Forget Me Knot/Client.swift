@@ -48,7 +48,7 @@ class Client {
     task.resume()
   }
   
-  func upload(groceryList: GroceryList, completionHandler: @escaping (_ result: Any?, _ error: Error?)->Void) {
+  func upload(groceryList: GroceryList, completionHandler: @escaping (_ success: Bool, _ result: Any?)->Void) {
     guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -61,37 +61,34 @@ class Client {
       let itemJSONString = "{\"item_id\": \(item.id)},"
       itemsJSONArray.append(itemJSONString)
     }
-    itemsJSONArray.remove(at: itemsJSONArray.index(before: itemsJSONArray.endIndex))
-    itemsJSONArray.append("]")
-    print(itemsJSONArray)
+    var trimmedItemsJSON = itemsJSONArray.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+    trimmedItemsJSON.append("]")
     
-    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSONArray)}}"
+    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(trimmedItemsJSON)}}"
     request.httpBody = body.data(using: .utf8)
-    
     
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
       
       guard error == nil else {
-        completionHandler(nil, error)
+        completionHandler(false, nil)
         return
       }
       
-      guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode < 300 else {
-        print("Non 2xx status code from server")
-        return
-      }
-      
-      guard let data = data else {
-        print("Couldn't retrieve data from server")
-        return
-      }
+      guard let data = data else { return }
       
       do {
-        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-        completionHandler(json, nil)
+        guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+          completionHandler(false, nil)
+          return
+        }
+        
+        if json["errors"] != nil {
+          completionHandler(false, json)
+        } else {
+          completionHandler(true, json)
+        }
       } catch {
-        completionHandler(nil, error)
       }
     }
     task.resume()
