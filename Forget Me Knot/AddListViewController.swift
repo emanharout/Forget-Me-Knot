@@ -14,6 +14,8 @@ class AddListViewController: UIViewController {
   
   var client: Client!
   var items = [Item]()
+  // TODO: See if we can replace with Set
+  var selectedItemIds = [Int]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -60,7 +62,34 @@ extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
     let item = items[indexPath.row]
     cell.item = item
     
+    if item.isSelected {
+      cell.accessoryType = .checkmark
+    } else if !item.isSelected {
+      cell.accessoryType = .none
+    }
+    
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let cell = tableView.cellForRow(at: indexPath)
+    let item = items[indexPath.row]
+    
+    item.isSelected = !item.isSelected
+    
+    if item.isSelected {
+      cell?.accessoryType = .checkmark
+      selectedItemIds.append(item.id)
+    } else if !item.isSelected {
+      cell?.accessoryType = .none
+      
+      for (index, itemId) in selectedItemIds.enumerated() {
+        if itemId == item.id {
+          selectedItemIds.remove(at: index)
+        }
+      }
+    }
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
