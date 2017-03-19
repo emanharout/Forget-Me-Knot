@@ -57,12 +57,17 @@ class Client {
     
     let items = groceryList.items
     var itemsJSONArray = ""
-    for item in items {
-      let itemJSONString = "{\"item_id\": \(item.id)},"
-      itemsJSONArray.append(itemJSONString)
+    if !items.isEmpty {
+      for item in items {
+        let itemJSONString = "{\"item_id\": \(item.id)},"
+        itemsJSONArray.append(itemJSONString)
+      }
     }
-    let trimmedItemsJSON = itemsJSONArray.trimmingCharacters(in: CharacterSet.punctuationCharacters)
-    let itemsJSON = "[\(trimmedItemsJSON)]"
+    
+    if items.count > 0 {
+      itemsJSONArray.remove(at: itemsJSONArray.index(before: itemsJSONArray.endIndex))
+    }
+    let itemsJSON = "[\(itemsJSONArray)]"
     
     let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
     request.httpBody = body.data(using: .utf8)
