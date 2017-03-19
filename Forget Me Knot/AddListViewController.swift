@@ -55,10 +55,10 @@ class AddListViewController: UIViewController {
 extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
     
     let item = items[indexPath.row]
-    cell.textLabel?.text = item.name
+    cell.item = item
     
     return cell
   }
