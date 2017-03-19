@@ -38,6 +38,7 @@ class AddListViewController: UIViewController {
           }
         }
         
+        self.delegate?.update(items: self.items)
         let mainQueue = DispatchQueue.main
         mainQueue.async {
           self.tableView.reloadData()
