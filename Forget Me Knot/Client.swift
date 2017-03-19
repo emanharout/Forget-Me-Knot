@@ -10,7 +10,7 @@ import Foundation
 
 class Client {
   
-  let sharedInstance = Client()
+  static let sharedInstance = Client()
   
   private init(){}
   

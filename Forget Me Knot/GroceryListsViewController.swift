@@ -16,6 +16,7 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var listDescriptionLabel: UILabel!
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
   
+  var client: Client!
   var groceryLists = [GroceryList(name: "Desserts", description: "Sugar rush after a good meal", items: [Item(name: "Cake", id: 1), Item(name: "Ice Cream", id: 2)]),
                       GroceryList(name: "Pies", description: "A treat for everyone", items: [Item(name: "Pumpkin Pie", id: 3), Item(name: "Apple Pie", id: 4)])]
   
