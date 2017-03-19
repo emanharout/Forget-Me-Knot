@@ -38,14 +38,7 @@ class GroceryListsViewController: UIViewController {
     setupFlowLayout()
     setupNavigationBar()
     
-    if groceryLists.isEmpty {
-      for view in view.subviews {
-        view.isHidden = true
-      }
-      noListsStackView.isHidden = false
-    } else {
-      noListsStackView.isHidden = true
-    }
+    hideEmptyListStackViewIfNeeded()
   }
   
   func setupFlowLayout() {
@@ -66,6 +59,20 @@ class GroceryListsViewController: UIViewController {
     let attributes = [NSFontAttributeName: font!,
                       NSKernAttributeName : CGFloat(10.0)] as [String : Any]
     newListBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+  }
+  
+  func hideEmptyListStackViewIfNeeded() {
+    if groceryLists.isEmpty {
+      for view in view.subviews {
+        view.isHidden = true
+      }
+      noListsStackView.isHidden = false
+    } else {
+      for view in view.subviews {
+        view.isHidden = false
+      }
+      noListsStackView.isHidden = true
+    }
   }
   
 }
@@ -132,17 +139,7 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
       }
       self.groceryLists = groceryLists
       DispatchQueue.main.async {
-        if self.groceryLists.isEmpty {
-          for view in self.view.subviews {
-            view.isHidden = true
-          }
-          self.noListsStackView.isHidden = false
-        } else {
-          for view in self.view.subviews {
-            view.isHidden = false
-          }
-          self.noListsStackView.isHidden = true
-        }
+        self.hideEmptyListStackViewIfNeeded()
       }
     }
   }
