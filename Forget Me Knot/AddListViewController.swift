@@ -69,19 +69,21 @@ class AddListViewController: UIViewController {
     let groceryList = GroceryList(name: name, description: description, items: selectedItems)
     client.upload(groceryList: groceryList) { (success, result) in
       
-      guard success == true else {
-        if let result = result as? [String: Any], let message = result["message"] as? String {
-          self.displayAlert(with: "Upload Failed", and: message) { (alertController) in
-            self.dismiss(animated: true, completion: nil)
+      DispatchQueue.main.async {
+        guard success == true else {
+          if let result = result as? [String: Any], let message = result["message"] as? String {
+            self.displayAlert(with: "Upload Failed", and: message) { (alertController) in
+              self.dismiss(animated: true, completion: nil)
+            }
+          } else {
+            self.displayAlert(with: "Upload Failed", and: "Experiencing networking issues") { (alertController) in
+              self.dismiss(animated: true, completion: nil)
+            }
           }
-        } else {
-          self.displayAlert(with: "Upload Failed", and: "Experiencing networking issues") { (alertController) in
-            self.dismiss(animated: true, completion: nil)
-          }
+          return
         }
-        return
+        _ = self.navigationController?.popViewController(animated: true)
       }
-      _ = self.navigationController?.popViewController(animated: true)
     }
   }
 }

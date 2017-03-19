@@ -65,7 +65,6 @@ class Client {
     let itemsJSON = "[\(trimmedItemsJSON)]"
     
     let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
-    print(body)
     request.httpBody = body.data(using: .utf8)
     
     let session = URLSession.shared
