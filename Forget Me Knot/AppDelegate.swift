@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    
+    guard let navigationViewController = window?.rootViewController as? UINavigationController else { return true }
+    guard let initialViewController = navigationViewController.viewControllers.first as? GroceryListsViewController else { return true }
+    initialViewController.client = Client.sharedInstance
+    
     return true
   }
 

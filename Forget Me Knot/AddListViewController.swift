@@ -10,10 +10,35 @@ import UIKit
 
 class AddListViewController: UIViewController {
   
+  @IBOutlet weak var tableView: UITableView!
+  
+  var client: Client!
+  var items = [Item]()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     setupNavigationBar()
+    client.fetchItems { (result, error) in
+      if let result = result {
+        
+        guard let itemsArray = result as? [[String: Any]] else { return }
+        
+        for item in itemsArray {
+          if let name = item["name"] as? String, let id = item["id"] as? Int {
+            let item = Item(name: name, id: id)
+            self.items.append(item)
+          }
+        }
+        
+        let mainQueue = DispatchQueue.main
+        mainQueue.async {
+          self.tableView.reloadData()
+        }
+      } else if let error = error {
+        print(error)
+      }
+    }
   }
   
   func setupNavigationBar() {
@@ -30,12 +55,16 @@ class AddListViewController: UIViewController {
 extension AddListViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+    
+    let item = items[indexPath.row]
+    cell.item = item
+    
     return cell
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5
+    return items.count
   }
   
 }
