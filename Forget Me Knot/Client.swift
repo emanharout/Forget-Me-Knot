@@ -22,9 +22,7 @@ class Client {
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
       guard error == nil else {
-        if let error = error {
-          completionHandler(nil, error.localizedDescription)
-        }
+        completionHandler(nil, error!.localizedDescription)
         return
       }
       
@@ -56,9 +54,7 @@ class Client {
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
       guard error == nil else {
-        if let error = error {
-          completionHandler(nil, error.localizedDescription)
-        }
+        completionHandler(nil, error!.localizedDescription)
         return
       }
       
@@ -83,7 +79,7 @@ class Client {
   }
 
   
-  func upload(groceryList: GroceryList, completionHandler: @escaping (_ success: Bool, _ result: Any?)->Void) {
+  func upload(groceryList: GroceryList, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
     guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -109,11 +105,14 @@ class Client {
     let task = session.dataTask(with: request) { (data, response, error) in
       
       guard error == nil else {
-        completionHandler(false, nil)
+        completionHandler(nil, error!.localizedDescription)
         return
       }
       
-      guard let data = data else { return }
+      guard let data = data else {
+        completionHandler(nil, "Failed to retrieve data from server.")
+        return
+      }
       
       do {
         guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
@@ -121,12 +120,12 @@ class Client {
           return
         }
         
-        if json["errors"] != nil {
-          completionHandler(false, json)
-        } else {
-          completionHandler(true, json)
+        if let errorMessage = json["errors"] as? String {
+          completionHandler(nil, errorMessage)
         }
+        completionHandler(json, nil)
       } catch {
+        completionHandler(nil, error.localizedDescription)
       }
     }
     task.resume()
