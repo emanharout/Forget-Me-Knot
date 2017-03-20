@@ -14,27 +14,36 @@ class Client {
   
   private init(){}
   
-  func fetchItems(completionHandler: @escaping (_ result: Any?, _ error: Error?)->Void) {
+  func fetchItems(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.FetchItemsEndPath)") else { return }
     
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/items.json") else { return }
+    initiateGETRequest(with: url, completionHandler: completionHandler)
+  }
+  
+  func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
+    
+    initiateGETRequest(with: url, completionHandler: completionHandler)
+  }
+  
+  private func initiateGETRequest(with url: URL, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void){
     var request = URLRequest(url: url)
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+    request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
-      
       guard error == nil else {
-        completionHandler(nil, error)
+        completionHandler(nil, error!.localizedDescription)
         return
       }
       
       guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode < 300 else {
-        print("Non 2xx status code from server")
+        completionHandler(nil, "Currently experiencing issues with server.")
         return
       }
       
       guard let data = data else {
-        print("Couldn't retrieve data from server")
+        completionHandler(nil, "Failed to retrieve data from server.")
         return
       }
       
@@ -42,93 +51,73 @@ class Client {
         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         completionHandler(json, nil)
       } catch {
-        completionHandler(nil, error)
+        completionHandler(nil, error.localizedDescription)
       }
     }
     task.resume()
   }
   
-  func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ error: Error?)->Void) {
-    
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
-    var request = URLRequest(url: url)
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
-    
-    let session = URLSession.shared
-    let task = session.dataTask(with: request) { (data, response, error) in
-      
-      guard error == nil else {
-        completionHandler(nil, error)
-        return
-      }
-      
-      guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode < 300 else {
-        print("Non 2xx status code from server")
-        return
-      }
-      
-      guard let data = data else {
-        print("Couldn't retrieve data from server")
-        return
-      }
-      
-      do {
-        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-        completionHandler(json, nil)
-      } catch {
-        completionHandler(nil, error)
-      }
-    }
-    task.resume()
-  }
-
   
-  func upload(groceryList: GroceryList, completionHandler: @escaping (_ success: Bool, _ result: Any?)->Void) {
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
+  func upload(groceryList: GroceryList, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+        request.addValue("\(Constants.Http.ContentHeaderValue)", forHTTPHeaderField: "\(Constants.Http.ContentHeaderField)")
+        request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let items = groceryList.items
     var itemsJSONArray = ""
     if !items.isEmpty {
       for item in items {
-        let itemJSONString = "{\"item_id\": \(item.id)},"
+        let itemJSONString = "{\"\(Constants.JSONBodyKeys.ItemId)\": \(item.id)},"
         itemsJSONArray.append(itemJSONString)
       }
-    }
-    
-    if items.count > 0 {
       itemsJSONArray.remove(at: itemsJSONArray.index(before: itemsJSONArray.endIndex))
     }
+    
     let itemsJSON = "[\(itemsJSONArray)]"
     
-    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
+    let body = "{\"\(Constants.JSONBodyKeys.GroceryList)\": {\"\(Constants.JSONBodyKeys.Name)\": \"\(groceryList.name)\",\"\(Constants.JSONBodyKeys.Description)\": \"\(groceryList.description)\",\"\(Constants.JSONBodyKeys.ListItemAttributes)\": \(itemsJSON)}}"
     request.httpBody = body.data(using: .utf8)
     
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
       
       guard error == nil else {
-        completionHandler(false, nil)
+        completionHandler(nil, error!.localizedDescription)
         return
       }
       
-      guard let data = data else { return }
+      guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+        completionHandler(nil, "Issues communicating with server")
+        return
+      }
+      
+      guard let data = data else {
+        completionHandler(nil, "Failed to retrieve data from server.")
+        return
+      }
       
       do {
         guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-          completionHandler(false, nil)
+          completionHandler(nil, "Failed to retrieve Lists")
           return
         }
         
-        if json["errors"] != nil {
-          completionHandler(false, json)
-        } else {
-          completionHandler(true, json)
+        if json["\(Constants.ResponseKeys.Errors)"] != nil {
+          if let message = json["\(Constants.ResponseKeys.Message)"] as? String {
+            completionHandler(nil, message)
+          }
         }
+        
+        guard statusCode >= 200 && statusCode < 300 else {
+          completionHandler(nil, "Currently experiencing issues with server.")
+          return
+        }
+        
+        completionHandler(json, nil)
       } catch {
+        completionHandler(nil, error.localizedDescription)
       }
     }
     task.resume()

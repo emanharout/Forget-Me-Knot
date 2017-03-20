@@ -26,16 +26,19 @@ class GroceryListsViewController: UIViewController {
   var groceryLists = [GroceryList]()
   var items = [Item]()
   var displayedItems = [Item]()
-  var selectedTab: TabCell? {
+  var selectedTab: (list: GroceryList, index: Int, cell: TabCell)? {
     didSet {
       if let oldValue = oldValue {
-        oldValue.layer.backgroundColor = UIColor.clear.cgColor
-        oldValue.listLabel.textColor = UIColor.white
-        oldValue.isSelected = false
+        oldValue.list.isActive = false
+        
+        oldValue.cell.layer.backgroundColor = UIColor.clear.cgColor
+        oldValue.cell.listLabel.textColor = UIColor.white
+        oldValue.cell.isSelected = false
       }
+      
       if let selectedTab = selectedTab {
-        selectedTab.layer.backgroundColor = UIColor.white.cgColor
-        selectedTab.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+        selectedTab.cell.layer.backgroundColor = UIColor.white.cgColor
+        selectedTab.cell.listLabel.textColor = UIColor(colorLiteralRed: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
       }
     }
   }
@@ -104,8 +107,7 @@ class GroceryListsViewController: UIViewController {
   }
   
   func displayGroceryLists(completionHandler: (()->Void)?) {
-    client.fetchGroceryLists { (result, error) in
-      
+    client.fetchGroceryLists { (result, errorMessage) in
       defer {
         if let completionHandler = completionHandler {
           DispatchQueue.main.async {
@@ -114,48 +116,67 @@ class GroceryListsViewController: UIViewController {
         }
       }
       
-      guard let result = result as? [[String: Any]] else {
-        // TODO: Handle Error
+      if let errorMessage = errorMessage {
+        DispatchQueue.main.async {
+          self.displayAlert(with: "Networking Issues", and: "\(errorMessage)", completionHandler: nil)
+        }
         return
       }
       
+      guard let result = result as? [[String: Any]] else { return }
       var groceryLists = [GroceryList]()
       
       for groceryListDictionary in result {
         var items = [Item]()
         
-        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
+        if let itemsDictionary = groceryListDictionary["\(Constants.ResponseKeys.Items)"] as? [[String: Any]] {
           for itemDictionary in itemsDictionary {
-            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
+            if let name = itemDictionary["\(Constants.ResponseKeys.Name)"] as? String, let id = itemDictionary["\(Constants.ResponseKeys.Id)"] as? Int {
               let item = Item(name: name, id: id)
               items.append(item)
             }
           }
         }
         
-        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
+        if let name = groceryListDictionary["\(Constants.ResponseKeys.Name)"] as? String, let description = groceryListDictionary["\(Constants.ResponseKeys.Description)"] as? String {
           let groceryList = GroceryList(name: name, description: description, items: items)
           groceryLists.append(groceryList)
         }
       }
       
-      self.groceryLists = groceryLists
+      let lastIndexOfCurrentList = self.groceryLists.endIndex
+      let lastIndexOfNewList = groceryLists.endIndex
+      
+      if lastIndexOfCurrentList > 0 {
+        for index in lastIndexOfCurrentList...lastIndexOfNewList - 1 {
+          let list = groceryLists[index]
+          self.groceryLists.append(list)
+        }
+      } else {
+        self.groceryLists = groceryLists
+      }
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
-        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
+        // invalidateLayout() called due to collectionView not scrolling and displaying all items
         self.collectionView.collectionViewLayout.invalidateLayout()
       }
     }
   }
   
+  func displayAlert(with title: String, and message: String, completionHandler: ((_ alertController: UIAlertController)->Void)?) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alert.addAction(action)
+    present(alert, animated: true, completion: nil)
+  }
 }
 
 extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
-    if cell.isSelected {
+    if let groceryListActive = groceryLists[indexPath.item].isActive, groceryListActive == true {
       cell.layer.backgroundColor = UIColor.white.cgColor
       cell.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
     } else {
@@ -170,11 +191,13 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
     if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
-      selectedTab = cell
-      listNameLabel.text = selectedTab?.groceryList?.name
-      listDescriptionLabel.text = selectedTab?.groceryList?.name
+      let groceryList = groceryLists[indexPath.item]
+      groceryList.isActive = true
+      selectedTab = (list: groceryList, index: indexPath.item, cell: cell)
+      
+      listNameLabel.text = selectedTab?.cell.groceryList?.name
+      listDescriptionLabel.text = selectedTab?.cell.groceryList?.name
       displayedItems = cell.groceryList?.items ?? []
       tableView.reloadData()
     }
