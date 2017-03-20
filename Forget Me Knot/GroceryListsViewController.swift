@@ -121,6 +121,7 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
       }
       
       var groceryLists = [GroceryList]()
+      
       for groceryListDictionary in result {
         var items = [Item]()
         
@@ -138,9 +139,14 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
           groceryLists.append(groceryList)
         }
       }
+      
       self.groceryLists = groceryLists
+      
       DispatchQueue.main.async {
         self.hideEmptyListStackViewIfNeeded()
+        self.collectionView.reloadData()
+        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
+        self.collectionView.collectionViewLayout.invalidateLayout()
       }
     }
   }
