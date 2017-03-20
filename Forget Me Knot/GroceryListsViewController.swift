@@ -10,15 +10,35 @@ import UIKit
 
 class GroceryListsViewController: UIViewController {
 
-  @IBOutlet weak var noListsStackView: UIStackView!
+  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+  
+  @IBOutlet weak var contentContainerView: UIView!
+  @IBOutlet weak var noListsStackView: UIStackView!
+  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
   
   var client: Client!
-  var groceryLists = [GroceryList(name: "Desserts", description: "Sugar rush after a good meal", items: [Item(name: "Cake", id: 1), Item(name: "Ice Cream", id: 2)]),
-                      GroceryList(name: "Pies", description: "A treat for everyone", items: [Item(name: "Pumpkin Pie", id: 3), Item(name: "Apple Pie", id: 4)])]
+  var groceryLists = [GroceryList]()
+  var items = [Item]()
+  var displayedItems = [Item]()
+  var selectedTab: TabCell? {
+    didSet {
+      if let oldValue = oldValue {
+        oldValue.layer.backgroundColor = UIColor.clear.cgColor
+        oldValue.listLabel.textColor = UIColor.white
+        oldValue.isSelected = false
+      }
+      if let selectedTab = selectedTab {
+        selectedTab.layer.backgroundColor = UIColor.white.cgColor
+        selectedTab.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+      }
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,27 +50,29 @@ class GroceryListsViewController: UIViewController {
     if segue.identifier == "showAddListViewController" {
       guard let destinationViewController = segue.destination as? AddListViewController else { return }
       destinationViewController.client = client
+      destinationViewController.delegate = self
     }
   }
   
   func setupViews() {
+    contentContainerView.isHidden = true
+    noListsStackView.isHidden = true
+    activityIndicator.isHidden = false
+    activityIndicator.startAnimating()
+    
     setupFlowLayout()
     setupNavigationBar()
-    
-    if groceryLists.isEmpty {
-      for view in view.subviews {
-        view.isHidden = true
-      }
-      noListsStackView.isHidden = false
-    } else {
-      noListsStackView.isHidden = true
+    displayGroceryLists() {
+      self.activityIndicator.isHidden = true
+      self.activityIndicator.stopAnimating()
+      self.hideEmptyListStackViewIfNeeded()
     }
   }
   
   func setupFlowLayout() {
     flowLayout.scrollDirection = .horizontal
     flowLayout.estimatedItemSize = CGSize(width: 100, height: 50)
-    flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+    flowLayout.sectionInset = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
   }
   
   func setupNavigationBar() {
@@ -61,10 +83,70 @@ class GroceryListsViewController: UIViewController {
       navigationItem.titleView = imageView
     }
     
-    let font = UIFont(name: "Avenir-Light", size: 22)
+    let font = UIFont(name: "Avenir-Light", size: 15)
     let attributes = [NSFontAttributeName: font!,
                       NSKernAttributeName : CGFloat(10.0)] as [String : Any]
     newListBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+  }
+  
+  func hideEmptyListStackViewIfNeeded() {
+    if groceryLists.isEmpty {
+      for view in view.subviews {
+        view.isHidden = true
+      }
+      noListsStackView.isHidden = false
+    } else {
+      for view in view.subviews {
+        view.isHidden = false
+      }
+      noListsStackView.isHidden = true
+    }
+  }
+  
+  func displayGroceryLists(completionHandler: (()->Void)?) {
+    client.fetchGroceryLists { (result, error) in
+      
+      defer {
+        if let completionHandler = completionHandler {
+          DispatchQueue.main.async {
+            completionHandler()
+          }
+        }
+      }
+      
+      guard let result = result as? [[String: Any]] else {
+        // TODO: Handle Error
+        return
+      }
+      
+      var groceryLists = [GroceryList]()
+      
+      for groceryListDictionary in result {
+        var items = [Item]()
+        
+        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
+          for itemDictionary in itemsDictionary {
+            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
+              let item = Item(name: name, id: id)
+              items.append(item)
+            }
+          }
+        }
+        
+        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
+          let groceryList = GroceryList(name: name, description: description, items: items)
+          groceryLists.append(groceryList)
+        }
+      }
+      
+      self.groceryLists = groceryLists
+      
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
+        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
+        self.collectionView.collectionViewLayout.invalidateLayout()
+      }
+    }
   }
   
 }
@@ -73,10 +155,29 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
-    
+    if cell.isSelected {
+      cell.layer.backgroundColor = UIColor.white.cgColor
+      cell.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+    } else {
+      cell.layer.backgroundColor = UIColor.clear.cgColor
+      cell.listLabel.textColor = UIColor.white
+    }
+
     let groceryList = groceryLists[indexPath.item]
-    cell.listLabel.text = groceryList.name
+    cell.groceryList = groceryList
+    
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
+      selectedTab = cell
+      listNameLabel.text = selectedTab?.groceryList?.name
+      listDescriptionLabel.text = selectedTab?.groceryList?.name
+      displayedItems = cell.groceryList?.items ?? []
+      tableView.reloadData()
+    }
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -88,12 +189,32 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
 extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+    
+    let item = displayedItems[indexPath.row]
+    cell.item = item
+    
     return cell
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return displayedItems.count
   }
   
+}
+
+extension GroceryListsViewController: AddListViewControllerDelegate {
+  
+  func update(items: [Item]) {
+    self.items = items
+  }
+  
+  func userDidCreateGroceryList() {
+    activityIndicator.startAnimating()
+    activityIndicator.isHidden = false
+    displayGroceryLists{
+      self.activityIndicator.isHidden = true
+      self.activityIndicator.stopAnimating()
+    }
+  }
 }

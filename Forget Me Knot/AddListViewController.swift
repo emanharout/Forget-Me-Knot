@@ -20,6 +20,7 @@ class AddListViewController: UIViewController {
   var items = [Item]()
   // TODO: See if we can replace with Set
   var selectedItems = [Item]()
+  weak var delegate: AddListViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -37,6 +38,7 @@ class AddListViewController: UIViewController {
           }
         }
         
+        self.delegate?.update(items: self.items)
         let mainQueue = DispatchQueue.main
         mainQueue.async {
           self.tableView.reloadData()
@@ -82,6 +84,8 @@ class AddListViewController: UIViewController {
           }
           return
         }
+        
+        self.delegate?.userDidCreateGroceryList()
         _ = self.navigationController?.popViewController(animated: true)
       }
     }
@@ -137,4 +141,9 @@ extension AddListViewController: UITextFieldDelegate {
     textField.resignFirstResponder()
     return false
   }
+}
+
+protocol AddListViewControllerDelegate: class {
+  func update(items: [Item])
+  func userDidCreateGroceryList()
 }
