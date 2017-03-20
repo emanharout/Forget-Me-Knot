@@ -25,6 +25,7 @@ class GroceryListsViewController: UIViewController {
   var client: Client!
   var groceryLists = [GroceryList]()
   var items = [Item]()
+  var displayedItems = [Item]()
   var selectedTab: TabCell? {
     didSet {
       if let oldValue = oldValue {
@@ -174,6 +175,8 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
       selectedTab = cell
       listNameLabel.text = selectedTab?.groceryList?.name
       listDescriptionLabel.text = selectedTab?.groceryList?.name
+      displayedItems = cell.groceryList?.items ?? []
+      tableView.reloadData()
     }
   }
   
@@ -186,12 +189,16 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
 extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+    
+    let item = displayedItems[indexPath.row]
+    cell.item = item
+    
     return cell
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return displayedItems.count
   }
   
 }
