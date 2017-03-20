@@ -210,6 +210,10 @@ extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource
     return cell
   }
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return displayedItems.count
   }
