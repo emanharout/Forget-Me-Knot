@@ -27,5 +27,4 @@ class TabCell: UICollectionViewCell {
     layer.borderColor = UIColor.white.cgColor
   }
   
-  
 }
