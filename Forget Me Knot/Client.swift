@@ -48,7 +48,7 @@ class Client {
     task.resume()
   }
   
-  func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ error: Error?)->Void) {
+  func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
     guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
     var request = URLRequest(url: url)
     request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
@@ -56,17 +56,19 @@ class Client {
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
       guard error == nil else {
-        completionHandler(nil, error)
+        if let error = error {
+          completionHandler(nil, error.localizedDescription)
+        }
         return
       }
       
       guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode < 300 else {
-        print("Non 2xx status code from server")
+        completionHandler(nil, "Currently experiencing issues with server.")
         return
       }
       
       guard let data = data else {
-        print("Couldn't retrieve data from server")
+        completionHandler(nil, "Failed to retrieve data from server.")
         return
       }
       
@@ -74,7 +76,7 @@ class Client {
         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         completionHandler(json, nil)
       } catch {
-        completionHandler(nil, error)
+        completionHandler(nil, error.localizedDescription)
       }
     }
     task.resume()

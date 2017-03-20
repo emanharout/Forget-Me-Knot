@@ -104,8 +104,7 @@ class GroceryListsViewController: UIViewController {
   }
   
   func displayGroceryLists(completionHandler: (()->Void)?) {
-    client.fetchGroceryLists { (result, error) in
-      
+    client.fetchGroceryLists { (result, errorMessage) in
       defer {
         if let completionHandler = completionHandler {
           DispatchQueue.main.async {
@@ -114,11 +113,12 @@ class GroceryListsViewController: UIViewController {
         }
       }
       
-      guard let result = result as? [[String: Any]] else {
-        // TODO: Handle Error
+      if let errorMessage = errorMessage {
+        self.displayAlert(with: "Networking Issues", and: "\(errorMessage)", completionHandler: nil)
         return
       }
       
+      guard let result = result as? [[String: Any]] else { return }
       var groceryLists = [GroceryList]()
       
       for groceryListDictionary in result {
@@ -143,12 +143,18 @@ class GroceryListsViewController: UIViewController {
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
-        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
+        // invalidateLayout() called due to collectionView not scrolling and displaying all items
         self.collectionView.collectionViewLayout.invalidateLayout()
       }
     }
   }
   
+  func displayAlert(with title: String, and message: String, completionHandler: ((_ alertController: UIAlertController)->Void)?) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alert.addAction(action)
+    present(alert, animated: true, completion: nil)
+  }
 }
 
 extension GroceryListsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -170,7 +176,6 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
     if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
       selectedTab = cell
       listNameLabel.text = selectedTab?.groceryList?.name
