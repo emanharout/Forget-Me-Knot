@@ -15,11 +15,10 @@ protocol AddListViewControllerDelegate: class {
 
 class AddListViewController: UIViewController {
   
-  
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var descriptionTextField: UITextField!
   @IBOutlet weak var tableView: UITableView!
-  @IBOutlet weak var doneButton: UIButton!
+  @IBOutlet weak var doneButtonHeightConstraint: NSLayoutConstraint!
   
   var client: Client!
   var items = [Item]()
@@ -29,6 +28,7 @@ class AddListViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    doneButtonHeightConstraint.constant = 0
     setupNavigationBar()
     client.fetchItems { (result, error) in
       if let error = error {
@@ -76,7 +76,7 @@ class AddListViewController: UIViewController {
     let groceryList = GroceryList(name: name, description: description, items: selectedItems)
     
     client.upload(groceryList: groceryList) { (result, errorMessage) in
-
+      
       DispatchQueue.main.async {
         guard errorMessage == nil else {
           self.displayAlert(with: "Upload Failed", and: errorMessage!, completionHandler: nil)
@@ -138,5 +138,10 @@ extension AddListViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return false
+  }
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    doneButtonHeightConstraint.constant = 66
+    view.setNeedsLayout()
   }
 }

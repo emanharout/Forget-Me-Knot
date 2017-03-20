@@ -9,14 +9,13 @@
 import UIKit
 
 class GroceryListsViewController: UIViewController {
-
+  
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
   
   @IBOutlet weak var contentContainerView: UIView!
   @IBOutlet weak var noListsStackView: UIStackView!
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
@@ -60,14 +59,10 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     contentContainerView.isHidden = true
     noListsStackView.isHidden = true
-    activityIndicator.isHidden = false
-    activityIndicator.startAnimating()
     
     setupFlowLayout()
     setupNavigationBar()
     displayGroceryLists() {
-      self.activityIndicator.isHidden = true
-      self.activityIndicator.stopAnimating()
       self.hideEmptyListStackViewIfNeeded()
     }
   }
@@ -94,14 +89,10 @@ class GroceryListsViewController: UIViewController {
   
   func hideEmptyListStackViewIfNeeded() {
     if groceryLists.isEmpty {
-      for view in view.subviews {
-        view.isHidden = true
-      }
+      contentContainerView.isHidden = true
       noListsStackView.isHidden = false
     } else {
-      for view in view.subviews {
-        view.isHidden = false
-      }
+      contentContainerView.isHidden = false
       noListsStackView.isHidden = true
     }
   }
@@ -183,7 +174,7 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
       cell.layer.backgroundColor = UIColor.clear.cgColor
       cell.listLabel.textColor = UIColor.white
     }
-
+    
     let groceryList = groceryLists[indexPath.item]
     cell.groceryList = groceryList
     
@@ -206,7 +197,6 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return groceryLists.count
   }
-  
 }
 
 extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -223,7 +213,6 @@ extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return displayedItems.count
   }
-  
 }
 
 extension GroceryListsViewController: AddListViewControllerDelegate {
@@ -233,11 +222,6 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    activityIndicator.startAnimating()
-    activityIndicator.isHidden = false
-    displayGroceryLists{
-      self.activityIndicator.isHidden = true
-      self.activityIndicator.stopAnimating()
-    }
+    displayGroceryLists(completionHandler: nil)
   }
 }
