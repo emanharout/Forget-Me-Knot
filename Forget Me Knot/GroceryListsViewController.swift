@@ -155,6 +155,8 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
 
     if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
       selectedTab = cell
+      listNameLabel.text = selectedTab?.groceryList?.name
+      listDescriptionLabel.text = selectedTab?.groceryList?.name
     }
   }
   
