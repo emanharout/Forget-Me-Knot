@@ -54,9 +54,18 @@ class GroceryListsViewController: UIViewController {
   }
   
   func setupViews() {
+    contentContainerView.isHidden = true
+    noListsStackView.isHidden = true
+    activityIndicator.isHidden = false
+    activityIndicator.startAnimating()
+    
     setupFlowLayout()
     setupNavigationBar()
-    displayGroceryLists(completionHandler: nil)
+    displayGroceryLists() {
+      self.activityIndicator.isHidden = true
+      self.activityIndicator.stopAnimating()
+      self.hideEmptyListStackViewIfNeeded()
+    }
   }
   
   func setupFlowLayout() {
@@ -94,11 +103,18 @@ class GroceryListsViewController: UIViewController {
   }
   
   func displayGroceryLists(completionHandler: (()->Void)?) {
-    activityIndicator.startAnimating()
     client.fetchGroceryLists { (result, error) in
+      
+      defer {
+        if let completionHandler = completionHandler {
+          DispatchQueue.main.async {
+            completionHandler()
+          }
+        }
+      }
+      
       guard let result = result as? [[String: Any]] else {
         // TODO: Handle Error
-        self.activityIndicator.stopAnimating()
         return
       }
       
@@ -125,8 +141,6 @@ class GroceryListsViewController: UIViewController {
       self.groceryLists = groceryLists
       
       DispatchQueue.main.async {
-        self.hideEmptyListStackViewIfNeeded()
-        self.activityIndicator.stopAnimating()
         self.collectionView.reloadData()
         // invalidateLayout() called due to bug where collectionView won't scroll and display all items
         self.collectionView.collectionViewLayout.invalidateLayout()
@@ -189,6 +203,11 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    displayGroceryLists(completionHandler: nil)
+    activityIndicator.startAnimating()
+    activityIndicator.isHidden = false
+    displayGroceryLists{
+      self.activityIndicator.isHidden = true
+      self.activityIndicator.stopAnimating()
+    }
   }
 }

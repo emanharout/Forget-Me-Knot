@@ -172,7 +172,8 @@
                                 </constraints>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-5b-DFj">
-                                <rect key="frame" x="150" y="274" width="20" height="20"/>
+                                <rect key="frame" x="150" y="254" width="20" height="20"/>
+                                <color key="color" red="0.0" green="0.72549019609999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -184,7 +185,7 @@
                             <constraint firstItem="iK7-gm-hJ7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="O1n-Yi-rCR"/>
                             <constraint firstItem="iK7-gm-hJ7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OEl-KC-6JR"/>
                             <constraint firstAttribute="trailing" secondItem="iK7-gm-hJ7" secondAttribute="trailing" id="S8Y-yp-tJ1"/>
-                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="o1I-PI-KO7"/>
+                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="o1I-PI-KO7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7MX-iO-IhS">
