@@ -40,7 +40,12 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
-    displayGroceryLists()
+    displayGroceryLists { 
+      if !self.groceryLists.isEmpty {
+        let indexPath = IndexPath(item: 0, section: 0)
+        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.left)
+      }
+    }
   }
   
   func setupFlowLayout() {
@@ -77,7 +82,7 @@ class GroceryListsViewController: UIViewController {
     }
   }
   
-  func displayGroceryLists() {
+  func displayGroceryLists(completionHandler: (()->Void)?) {
     activityIndicator.startAnimating()
     client.fetchGroceryLists { (result, error) in
       guard let result = result as? [[String: Any]] else {
@@ -157,6 +162,6 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    displayGroceryLists()
+    displayGroceryLists(completionHandler: nil)
   }
 }
