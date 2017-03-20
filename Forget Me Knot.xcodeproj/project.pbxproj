@@ -18,6 +18,7 @@
 		035558ED1E7E0033002A4667 /* AddListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558EC1E7E0033002A4667 /* AddListViewController.swift */; };
 		035558EF1E7E0CAE002A4667 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558EE1E7E0CAE002A4667 /* Client.swift */; };
 		035558F11E7E1B3F002A4667 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035558F01E7E1B3F002A4667 /* ItemCell.swift */; };
+		0365D81F1E7F8D9E0002A6B1 /* NetworkingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365D81E1E7F8D9E0002A6B1 /* NetworkingConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		035558EC1E7E0033002A4667 /* AddListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddListViewController.swift; sourceTree = "<group>"; };
 		035558EE1E7E0CAE002A4667 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		035558F01E7E1B3F002A4667 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		0365D81E1E7F8D9E0002A6B1 /* NetworkingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,8 @@
 			children = (
 				0349D2B71E7CC02F00D87B62 /* AppDelegate.swift */,
 				0349D2C31E7CC02F00D87B62 /* Info.plist */,
+				035558EE1E7E0CAE002A4667 /* Client.swift */,
+				0365D81E1E7F8D9E0002A6B1 /* NetworkingConstants.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -100,7 +104,6 @@
 			children = (
 				0349D2B91E7CC02F00D87B62 /* GroceryListsViewController.swift */,
 				035558EC1E7E0033002A4667 /* AddListViewController.swift */,
-				035558EE1E7E0CAE002A4667 /* Client.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				035558EB1E7DE71C002A4667 /* GroceryList.swift in Sources */,
 				0349D2B81E7CC02F00D87B62 /* AppDelegate.swift in Sources */,
 				0349D2CA1E7D073200D87B62 /* TabCell.swift in Sources */,
+				0365D81F1E7F8D9E0002A6B1 /* NetworkingConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
