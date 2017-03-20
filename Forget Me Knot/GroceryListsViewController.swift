@@ -71,7 +71,7 @@ class GroceryListsViewController: UIViewController {
     flowLayout.scrollDirection = .horizontal
     flowLayout.estimatedItemSize = CGSize(width: 100, height: 50)
     flowLayout.sectionInset = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
-    flowLayout.minimumLineSpacing = 24.0
+    flowLayout.minimumLineSpacing = 14.0
   }
   
   func setupNavigationBar() {
