@@ -26,16 +26,19 @@ class GroceryListsViewController: UIViewController {
   var groceryLists = [GroceryList]()
   var items = [Item]()
   var displayedItems = [Item]()
-  var selectedTab: TabCell? {
+  var selectedTab: (list: GroceryList, index: Int, cell: TabCell)? {
     didSet {
       if let oldValue = oldValue {
-        oldValue.layer.backgroundColor = UIColor.clear.cgColor
-        oldValue.listLabel.textColor = UIColor.white
-        oldValue.isSelected = false
+        oldValue.list.isActive = false
+        
+        oldValue.cell.layer.backgroundColor = UIColor.clear.cgColor
+        oldValue.cell.listLabel.textColor = UIColor.white
+        oldValue.cell.isSelected = false
       }
+      
       if let selectedTab = selectedTab {
-        selectedTab.layer.backgroundColor = UIColor.white.cgColor
-        selectedTab.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+        selectedTab.cell.layer.backgroundColor = UIColor.white.cgColor
+        selectedTab.cell.listLabel.textColor = UIColor(colorLiteralRed: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
       }
     }
   }
@@ -141,7 +144,17 @@ class GroceryListsViewController: UIViewController {
         }
       }
       
-      self.groceryLists = groceryLists
+      let lastIndexOfCurrentList = self.groceryLists.endIndex
+      let lastIndexOfNewList = groceryLists.endIndex
+      
+      if lastIndexOfCurrentList > 0 {
+        for index in lastIndexOfCurrentList...lastIndexOfNewList - 1 {
+          let list = groceryLists[index]
+          self.groceryLists.append(list)
+        }
+      } else {
+        self.groceryLists = groceryLists
+      }
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
@@ -163,7 +176,7 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
-    if cell.isSelected {
+    if let groceryListActive = groceryLists[indexPath.item].isActive, groceryListActive == true {
       cell.layer.backgroundColor = UIColor.white.cgColor
       cell.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
     } else {
@@ -179,9 +192,12 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
-      selectedTab = cell
-      listNameLabel.text = selectedTab?.groceryList?.name
-      listDescriptionLabel.text = selectedTab?.groceryList?.name
+      let groceryList = groceryLists[indexPath.item]
+      groceryList.isActive = true
+      selectedTab = (list: groceryList, index: indexPath.item, cell: cell)
+      
+      listNameLabel.text = selectedTab?.cell.groceryList?.name
+      listDescriptionLabel.text = selectedTab?.cell.groceryList?.name
       displayedItems = cell.groceryList?.items ?? []
       tableView.reloadData()
     }

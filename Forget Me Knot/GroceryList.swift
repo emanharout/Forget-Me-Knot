@@ -8,10 +8,17 @@
 
 import Foundation
 
-struct GroceryList {
+class GroceryList {
   
   let name: String
   let description: String
   let items: [Item]
+  var isActive: Bool?
+  
+  init(name: String, description: String, items: [Item], isActive: Bool? = nil) {
+    self.name = name
+    self.description = description
+    self.items = items
+  }
 
 }
