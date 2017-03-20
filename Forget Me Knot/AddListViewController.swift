@@ -75,18 +75,10 @@ class AddListViewController: UIViewController {
     guard let name = nameTextField.text, let description = descriptionTextField.text else { return }
     let groceryList = GroceryList(name: name, description: description, items: selectedItems)
     
-    client.upload(groceryList: groceryList) { (success, result) in
+    client.upload(groceryList: groceryList) { (result, errorMessage) in
       DispatchQueue.main.async {
-        guard success == true else {
-          if let result = result as? [String: Any], let message = result["message"] as? String {
-            self.displayAlert(with: "Upload Failed", and: message) { (alertController) in
-              self.dismiss(animated: true, completion: nil)
-            }
-          } else {
-            self.displayAlert(with: "Upload Failed", and: "Experiencing networking issues") { (alertController) in
-              self.dismiss(animated: true, completion: nil)
-            }
-          }
+        guard errorMessage == nil else {
+          self.displayAlert(with: "Upload Failed", and: errorMessage!, completionHandler: nil)
           return
         }
         
