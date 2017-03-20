@@ -16,38 +16,17 @@ class Client {
   
   func fetchItems(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
     guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.FetchItemsEndPath)") else { return }
-    var request = URLRequest(url: url)
-    request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
-    let session = URLSession.shared
-    let task = session.dataTask(with: request) { (data, response, error) in
-      guard error == nil else {
-        completionHandler(nil, error!.localizedDescription)
-        return
-      }
-      
-      guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode < 300 else {
-        completionHandler(nil, "Currently experiencing issues with server.")
-        return
-      }
-      
-      guard let data = data else {
-        completionHandler(nil, "Failed to retrieve data from server.")
-        return
-      }
-      
-      do {
-        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-        completionHandler(json, nil)
-      } catch {
-        completionHandler(nil, error.localizedDescription)
-      }
-    }
-    task.resume()
+    initiateGETRequest(with: url, completionHandler: completionHandler)
   }
   
   func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
     guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
+    
+    initiateGETRequest(with: url, completionHandler: completionHandler)
+  }
+  
+  private func initiateGETRequest(with url: URL, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void){
     var request = URLRequest(url: url)
     request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
