@@ -13,8 +13,11 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  
+  @IBOutlet weak var contentContainerView: UIView!
   @IBOutlet weak var noListsStackView: UIStackView!
+  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
@@ -59,7 +62,7 @@ class GroceryListsViewController: UIViewController {
   func setupFlowLayout() {
     flowLayout.scrollDirection = .horizontal
     flowLayout.estimatedItemSize = CGSize(width: 100, height: 50)
-    flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+    flowLayout.sectionInset = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
   }
   
   func setupNavigationBar() {
@@ -70,7 +73,7 @@ class GroceryListsViewController: UIViewController {
       navigationItem.titleView = imageView
     }
     
-    let font = UIFont(name: "Avenir-Light", size: 22)
+    let font = UIFont(name: "Avenir-Light", size: 15)
     let attributes = [NSFontAttributeName: font!,
                       NSKernAttributeName : CGFloat(10.0)] as [String : Any]
     newListBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
