@@ -61,7 +61,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ip-sB-cHi">
                                                     <rect key="frame" x="12" y="0.0" width="46" height="50"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="30"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -178,11 +178,13 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="collectionView" destination="C2W-n4-dZS" id="CvA-pb-gZY"/>
                         <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
                         <outlet property="listDescriptionLabel" destination="ASv-e0-GZN" id="mPG-9p-1o0"/>
                         <outlet property="listNameLabel" destination="1Ws-yy-eLc" id="ojt-6o-7QY"/>
                         <outlet property="newListBarButtonItem" destination="1CN-VL-vuo" id="aD0-8H-Hb4"/>
                         <outlet property="noListsStackView" destination="ssP-Fh-a9Q" id="kpC-Oh-j8W"/>
+                        <outlet property="tableView" destination="eDu-0c-Kdi" id="R2i-lJ-bO3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

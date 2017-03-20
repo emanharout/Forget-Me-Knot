@@ -10,8 +10,10 @@ import UIKit
 
 class GroceryListsViewController: UIViewController {
 
-  @IBOutlet weak var noListsStackView: UIStackView!
+  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+  @IBOutlet weak var noListsStackView: UIStackView!
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
   @IBOutlet weak var newListBarButtonItem: UIBarButtonItem!
