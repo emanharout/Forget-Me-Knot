@@ -25,6 +25,7 @@ class TabCell: UICollectionViewCell {
     
     layer.borderWidth = 1.0
     layer.borderColor = UIColor.white.cgColor
+    layer.cornerRadius = 12
   }
   
 }
