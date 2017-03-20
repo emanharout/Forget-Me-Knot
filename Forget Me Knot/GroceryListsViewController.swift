@@ -90,14 +90,10 @@ class GroceryListsViewController: UIViewController {
   
   func hideEmptyListStackViewIfNeeded() {
     if groceryLists.isEmpty {
-      for view in view.subviews {
-        view.isHidden = true
-      }
+      contentContainerView.isHidden = true
       noListsStackView.isHidden = false
     } else {
-      for view in view.subviews {
-        view.isHidden = false
-      }
+      contentContainerView.isHidden = false
       noListsStackView.isHidden = true
     }
   }
