@@ -22,6 +22,19 @@ class GroceryListsViewController: UIViewController {
   var client: Client!
   var groceryLists = [GroceryList]()
   var items = [Item]()
+  var selectedTab: TabCell? {
+    didSet {
+      if let oldValue = oldValue {
+        oldValue.layer.backgroundColor = UIColor.clear.cgColor
+        oldValue.listLabel.textColor = UIColor.white
+        oldValue.isSelected = false
+      }
+      if let selectedTab = selectedTab {
+        selectedTab.layer.backgroundColor = UIColor.white.cgColor
+        selectedTab.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+      }
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,12 +53,7 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
-    displayGroceryLists { 
-      if !self.groceryLists.isEmpty {
-        let indexPath = IndexPath(item: 0, section: 0)
-        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.left)
-      }
-    }
+    displayGroceryLists(completionHandler: nil)
   }
   
   func setupFlowLayout() {
@@ -129,11 +137,25 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! TabCell
-    
+    if cell.isSelected {
+      cell.layer.backgroundColor = UIColor.white.cgColor
+      cell.listLabel.textColor = UIColor(red: 214/255, green: 124/255, blue: 221/255, alpha: 1.0)
+    } else {
+      cell.layer.backgroundColor = UIColor.clear.cgColor
+      cell.listLabel.textColor = UIColor.white
+    }
+
     let groceryList = groceryLists[indexPath.item]
     cell.groceryList = groceryList
     
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    if let cell = collectionView.cellForItem(at: indexPath) as? TabCell {
+      selectedTab = cell
+    }
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
