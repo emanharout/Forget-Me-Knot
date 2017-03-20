@@ -37,5 +37,4 @@ struct Constants {
     static let Message = "message"
     static let Errors = "errors"
   }
-  
 }

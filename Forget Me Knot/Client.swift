@@ -62,8 +62,8 @@ class Client {
     guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
-        request.addValue("\(Constants.Http.ContentHeaderValue)", forHTTPHeaderField: "\(Constants.Http.ContentHeaderField)")
-        request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
+    request.addValue("\(Constants.Http.ContentHeaderValue)", forHTTPHeaderField: "\(Constants.Http.ContentHeaderField)")
+    request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let items = groceryList.items
     var itemsJSONArray = ""
@@ -122,5 +122,4 @@ class Client {
     }
     task.resume()
   }
-  
 }

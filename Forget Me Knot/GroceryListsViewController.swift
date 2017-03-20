@@ -9,7 +9,7 @@
 import UIKit
 
 class GroceryListsViewController: UIViewController {
-
+  
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
@@ -179,7 +179,7 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
       cell.layer.backgroundColor = UIColor.clear.cgColor
       cell.listLabel.textColor = UIColor.white
     }
-
+    
     let groceryList = groceryLists[indexPath.item]
     cell.groceryList = groceryList
     
@@ -202,7 +202,6 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return groceryLists.count
   }
-  
 }
 
 extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -219,7 +218,6 @@ extension GroceryListsViewController: UITableViewDelegate, UITableViewDataSource
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return displayedItems.count
   }
-  
 }
 
 extension GroceryListsViewController: AddListViewControllerDelegate {
