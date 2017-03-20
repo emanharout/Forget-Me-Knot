@@ -13,6 +13,7 @@ class GroceryListsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   @IBOutlet weak var noListsStackView: UIStackView!
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
@@ -40,7 +41,6 @@ class GroceryListsViewController: UIViewController {
     setupFlowLayout()
     setupNavigationBar()
     displayGroceryLists()
-    hideEmptyListStackViewIfNeeded()
   }
   
   func setupFlowLayout() {
@@ -78,9 +78,11 @@ class GroceryListsViewController: UIViewController {
   }
   
   func displayGroceryLists() {
+    activityIndicator.startAnimating()
     client.fetchGroceryLists { (result, error) in
       guard let result = result as? [[String: Any]] else {
         // TODO: Handle Error
+        self.activityIndicator.stopAnimating()
         return
       }
       
@@ -108,6 +110,7 @@ class GroceryListsViewController: UIViewController {
       
       DispatchQueue.main.async {
         self.hideEmptyListStackViewIfNeeded()
+        self.activityIndicator.stopAnimating()
         self.collectionView.reloadData()
         // invalidateLayout() called due to bug where collectionView won't scroll and display all items
         self.collectionView.collectionViewLayout.invalidateLayout()

@@ -84,7 +84,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="HEe-dt-3Cd"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-yb-AYP" userLabel="Container View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-yb-AYP" userLabel="Image Container View">
                                 <rect key="frame" x="0.0" y="110" width="320" height="174"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hero" translatesAutoresizingMaskIntoConstraints="NO" id="7YR-FM-ysh">
@@ -151,6 +151,9 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="YWz-re-HP8"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-5b-DFj">
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -162,8 +165,10 @@
                             <constraint firstItem="C2W-n4-dZS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="CuO-27-1zg"/>
                             <constraint firstItem="eDu-0c-Kdi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Dya-RN-Hnl"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EQX-aW-VzE"/>
+                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KSc-9m-xQ1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eDu-0c-Kdi" secondAttribute="bottom" id="O9h-kH-4r0"/>
                             <constraint firstItem="C2W-n4-dZS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gtr-BS-SKJ"/>
+                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="o1I-PI-KO7"/>
                             <constraint firstItem="eDu-0c-Kdi" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="bottom" id="rJp-JL-v86"/>
                             <constraint firstItem="eU5-yb-AYP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yZK-HC-QuB"/>
                         </constraints>
@@ -178,6 +183,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="jlq-5b-DFj" id="1cu-pz-qTt"/>
                         <outlet property="collectionView" destination="C2W-n4-dZS" id="CvA-pb-gZY"/>
                         <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
                         <outlet property="listDescriptionLabel" destination="ASv-e0-GZN" id="mPG-9p-1o0"/>
@@ -189,7 +195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1215" y="-662"/>
+            <point key="canvasLocation" x="1215" y="-662.32394366197184"/>
         </scene>
         <!--Add List View Controller-->
         <scene sceneID="AcB-Fp-Al6">
