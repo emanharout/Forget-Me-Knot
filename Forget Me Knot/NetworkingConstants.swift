@@ -10,7 +10,7 @@ import Foundation
 
 struct Constants {
   
-  struct HttpConstants {
+  struct Http {
     static let BaseUrl = "https://forget-me-knot-api.herokuapp.com"
     static let FetchItemsEndPath = "/api/v1/items.json"
     static let GroceryListEndPath = "/api/v1/grocery_lists.json"
@@ -31,6 +31,7 @@ struct Constants {
   struct ResponseKeys {
     static let Name = "name"
     static let Id = "id"
+    static let Description = "description"
     static let Items = "items"
     static let Message = "message"
     static let Errors = "errors"

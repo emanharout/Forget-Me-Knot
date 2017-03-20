@@ -41,7 +41,7 @@ class AddListViewController: UIViewController {
       guard let result = result, let itemsArray = result as? [[String : Any]] else { return }
       
       for item in itemsArray {
-        if let name = item["name"] as? String, let id = item["id"] as? Int {
+        if let name = item["\(Constants.ResponseKeys.Name)"] as? String, let id = item[Constants.ResponseKeys.Id] as? Int {
           let item = Item(name: name, id: id)
           self.items.append(item)
         }

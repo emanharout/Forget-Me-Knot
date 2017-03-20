@@ -15,9 +15,9 @@ class Client {
   private init(){}
   
   func fetchItems(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/items.json") else { return }
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.FetchItemsEndPath)") else { return }
     var request = URLRequest(url: url)
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+    request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -47,9 +47,9 @@ class Client {
   }
   
   func fetchGroceryLists(completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
     var request = URLRequest(url: url)
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+    request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -80,11 +80,11 @@ class Client {
   
   
   func upload(groceryList: GroceryList, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
-    guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
+    guard let url = URL(string: "\(Constants.Http.BaseUrl)\(Constants.Http.GroceryListEndPath)") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+        request.addValue("\(Constants.Http.ContentHeaderValue)", forHTTPHeaderField: "\(Constants.Http.ContentHeaderField)")
+        request.addValue("\(Constants.Http.AuthHeaderValue)", forHTTPHeaderField: "\(Constants.Http.AuthHeaderField)")
     
     let items = groceryList.items
     var itemsJSONArray = ""
@@ -98,7 +98,7 @@ class Client {
     
     let itemsJSON = "[\(itemsJSONArray)]"
     
-    let body = "{\"grocery_list\": {\"name\": \"\(groceryList.name)\",\"description\": \"\(groceryList.description)\",\"list_items_attributes\": \(itemsJSON)}}"
+    let body = "{\"\(Constants.JSONBodyKeys.GroceryList)\": {\"name\": \"\(groceryList.name)\",\"\(Constants.JSONBodyKeys.Description)\": \"\(groceryList.description)\",\"\(Constants.JSONBodyKeys.ListItemAttributes)\": \(itemsJSON)}}"
     request.httpBody = body.data(using: .utf8)
     
     let session = URLSession.shared
@@ -125,8 +125,10 @@ class Client {
           return
         }
         
-        if let errorMessage = json["errors"] as? String {
-          completionHandler(nil, errorMessage)
+        if json["\(Constants.ResponseKeys.Errors)"] != nil {
+          if let message = json["\(Constants.ResponseKeys.Message)"] as? String {
+            completionHandler(nil, message)
+          }
         }
         
         guard statusCode >= 200 && statusCode < 300 else {

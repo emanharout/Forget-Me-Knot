@@ -129,16 +129,16 @@ class GroceryListsViewController: UIViewController {
       for groceryListDictionary in result {
         var items = [Item]()
         
-        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
+        if let itemsDictionary = groceryListDictionary["\(Constants.ResponseKeys.Items)"] as? [[String: Any]] {
           for itemDictionary in itemsDictionary {
-            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
+            if let name = itemDictionary["\(Constants.ResponseKeys.Name)"] as? String, let id = itemDictionary["\(Constants.ResponseKeys.Id)"] as? Int {
               let item = Item(name: name, id: id)
               items.append(item)
             }
           }
         }
         
-        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
+        if let name = groceryListDictionary["\(Constants.ResponseKeys.Name)"] as? String, let description = groceryListDictionary["\(Constants.ResponseKeys.Description)"] as? String {
           let groceryList = GroceryList(name: name, description: description, items: items)
           groceryLists.append(groceryList)
         }
