@@ -32,7 +32,9 @@ class AddListViewController: UIViewController {
     setupNavigationBar()
     client.fetchItems { (result, error) in
       if let error = error {
-        self.displayAlert(with: "Failed to Retrieve Items", and: error, completionHandler: nil)
+        DispatchQueue.main.async {
+          self.displayAlert(with: "Failed to Retrieve Items", and: error, completionHandler: nil)
+        }
         return
       }
       

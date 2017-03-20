@@ -114,7 +114,9 @@ class GroceryListsViewController: UIViewController {
       }
       
       if let errorMessage = errorMessage {
-        self.displayAlert(with: "Networking Issues", and: "\(errorMessage)", completionHandler: nil)
+        DispatchQueue.main.async {
+          self.displayAlert(with: "Networking Issues", and: "\(errorMessage)", completionHandler: nil)
+        }
         return
       }
       
