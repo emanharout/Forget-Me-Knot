@@ -69,7 +69,7 @@ class Client {
     var itemsJSONArray = ""
     if !items.isEmpty {
       for item in items {
-        let itemJSONString = "{\"item_id\": \(item.id)},"
+        let itemJSONString = "{\"\(Constants.JSONBodyKeys.ItemId)\": \(item.id)},"
         itemsJSONArray.append(itemJSONString)
       }
       itemsJSONArray.remove(at: itemsJSONArray.index(before: itemsJSONArray.endIndex))
@@ -77,7 +77,7 @@ class Client {
     
     let itemsJSON = "[\(itemsJSONArray)]"
     
-    let body = "{\"\(Constants.JSONBodyKeys.GroceryList)\": {\"name\": \"\(groceryList.name)\",\"\(Constants.JSONBodyKeys.Description)\": \"\(groceryList.description)\",\"\(Constants.JSONBodyKeys.ListItemAttributes)\": \(itemsJSON)}}"
+    let body = "{\"\(Constants.JSONBodyKeys.GroceryList)\": {\"\(Constants.JSONBodyKeys.Name)\": \"\(groceryList.name)\",\"\(Constants.JSONBodyKeys.Description)\": \"\(groceryList.description)\",\"\(Constants.JSONBodyKeys.ListItemAttributes)\": \(itemsJSON)}}"
     request.httpBody = body.data(using: .utf8)
     
     let session = URLSession.shared

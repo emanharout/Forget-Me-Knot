@@ -26,6 +26,7 @@ struct Constants {
     static let Name = "name"
     static let Description = "description"
     static let ListItemAttributes = "list_items_attributes"
+    static let ItemId = "item_id"
   }
   
   struct ResponseKeys {
