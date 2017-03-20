@@ -16,7 +16,6 @@ class GroceryListsViewController: UIViewController {
   
   @IBOutlet weak var contentContainerView: UIView!
   @IBOutlet weak var noListsStackView: UIStackView!
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
   @IBOutlet weak var listNameLabel: UILabel!
   @IBOutlet weak var listDescriptionLabel: UILabel!
@@ -60,14 +59,10 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     contentContainerView.isHidden = true
     noListsStackView.isHidden = true
-    activityIndicator.isHidden = false
-    activityIndicator.startAnimating()
     
     setupFlowLayout()
     setupNavigationBar()
     displayGroceryLists() {
-      self.activityIndicator.isHidden = true
-      self.activityIndicator.stopAnimating()
       self.hideEmptyListStackViewIfNeeded()
     }
   }
@@ -233,11 +228,6 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    activityIndicator.startAnimating()
-    activityIndicator.isHidden = false
-    displayGroceryLists{
-      self.activityIndicator.isHidden = true
-      self.activityIndicator.stopAnimating()
-    }
+    displayGroceryLists(completionHandler: nil)
   }
 }

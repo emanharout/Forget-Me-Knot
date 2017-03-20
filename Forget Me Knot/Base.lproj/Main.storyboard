@@ -162,21 +162,15 @@
                                     <constraint firstItem="eDu-0c-Kdi" firstAttribute="top" secondItem="eU5-yb-AYP" secondAttribute="bottom" id="x7Y-Vr-pid"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="jlq-5b-DFj">
-                                <rect key="frame" x="150" y="254" width="20" height="20"/>
-                                <color key="color" red="0.0" green="0.72549019609999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iK7-gm-hJ7" secondAttribute="bottom" id="5EC-Bb-uTI"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="81C-GV-G1d"/>
                             <constraint firstItem="ssP-Fh-a9Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EQX-aW-VzE"/>
-                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KSc-9m-xQ1"/>
                             <constraint firstItem="iK7-gm-hJ7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="O1n-Yi-rCR"/>
                             <constraint firstItem="iK7-gm-hJ7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OEl-KC-6JR"/>
                             <constraint firstAttribute="trailing" secondItem="iK7-gm-hJ7" secondAttribute="trailing" id="S8Y-yp-tJ1"/>
-                            <constraint firstItem="jlq-5b-DFj" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="o1I-PI-KO7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7MX-iO-IhS">
@@ -189,7 +183,6 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="jlq-5b-DFj" id="1cu-pz-qTt"/>
                         <outlet property="collectionView" destination="C2W-n4-dZS" id="CvA-pb-gZY"/>
                         <outlet property="contentContainerView" destination="iK7-gm-hJ7" id="eSj-Bg-l1V"/>
                         <outlet property="flowLayout" destination="BCV-ZO-6fh" id="uRs-8L-GQ7"/>
