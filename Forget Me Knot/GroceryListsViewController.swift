@@ -39,43 +39,7 @@ class GroceryListsViewController: UIViewController {
   func setupViews() {
     setupFlowLayout()
     setupNavigationBar()
-    
-    client.fetchGroceryLists { (result, error) in
-      guard let result = result as? [[String: Any]] else {
-        // TODO: Handle Error
-        return
-      }
-      
-      var groceryLists = [GroceryList]()
-      
-      for groceryListDictionary in result {
-        var items = [Item]()
-        
-        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
-          for itemDictionary in itemsDictionary {
-            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
-              let item = Item(name: name, id: id)
-              items.append(item)
-            }
-          }
-        }
-        
-        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
-          let groceryList = GroceryList(name: name, description: description, items: items)
-          groceryLists.append(groceryList)
-        }
-      }
-      
-      self.groceryLists = groceryLists
-      
-      DispatchQueue.main.async {
-        self.hideEmptyListStackViewIfNeeded()
-        self.collectionView.reloadData()
-        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
-        self.collectionView.collectionViewLayout.invalidateLayout()
-      }
-    }
-    
+    displayGroceryLists()
     hideEmptyListStackViewIfNeeded()
   }
   
@@ -110,6 +74,44 @@ class GroceryListsViewController: UIViewController {
         view.isHidden = false
       }
       noListsStackView.isHidden = true
+    }
+  }
+  
+  func displayGroceryLists() {
+    client.fetchGroceryLists { (result, error) in
+      guard let result = result as? [[String: Any]] else {
+        // TODO: Handle Error
+        return
+      }
+      
+      var groceryLists = [GroceryList]()
+      
+      for groceryListDictionary in result {
+        var items = [Item]()
+        
+        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
+          for itemDictionary in itemsDictionary {
+            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
+              let item = Item(name: name, id: id)
+              items.append(item)
+            }
+          }
+        }
+        
+        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
+          let groceryList = GroceryList(name: name, description: description, items: items)
+          groceryLists.append(groceryList)
+        }
+      }
+      
+      self.groceryLists = groceryLists
+      
+      DispatchQueue.main.async {
+        self.hideEmptyListStackViewIfNeeded()
+        self.collectionView.reloadData()
+        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
+        self.collectionView.collectionViewLayout.invalidateLayout()
+      }
     }
   }
   
@@ -152,40 +154,6 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
   }
   
   func userDidCreateGroceryList() {
-    client.fetchGroceryLists { (result, error) in
-      guard let result = result as? [[String: Any]] else {
-        // TODO: Handle Error
-        return
-      }
-      
-      var groceryLists = [GroceryList]()
-      
-      for groceryListDictionary in result {
-        var items = [Item]()
-        
-        if let itemsDictionary = groceryListDictionary["items"] as? [[String: Any]] {
-          for itemDictionary in itemsDictionary {
-            if let name = itemDictionary["name"] as? String, let id = itemDictionary["id"] as? Int {
-              let item = Item(name: name, id: id)
-              items.append(item)
-            }
-          }
-        }
-        
-        if let name = groceryListDictionary["name"] as? String, let description = groceryListDictionary["description"] as? String {
-          let groceryList = GroceryList(name: name, description: description, items: items)
-          groceryLists.append(groceryList)
-        }
-      }
-      
-      self.groceryLists = groceryLists
-      
-      DispatchQueue.main.async {
-        self.hideEmptyListStackViewIfNeeded()
-        self.collectionView.reloadData()
-        // invalidateLayout() called due to bug where collectionView won't scroll and display all items
-        self.collectionView.collectionViewLayout.invalidateLayout()
-      }
-    }
+    displayGroceryLists()
   }
 }
