@@ -77,14 +77,14 @@ class Client {
     }
     task.resume()
   }
-
+  
   
   func upload(groceryList: GroceryList, completionHandler: @escaping (_ result: Any?, _ errorMessage: String?)->Void) {
     guard let url = URL(string: "https://forget-me-knot-api.herokuapp.com/api/v1/grocery_lists.json") else { return }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("haroutunian_1989", forHTTPHeaderField: "Authorization")
     
     let items = groceryList.items
     var itemsJSONArray = ""
@@ -109,6 +109,11 @@ class Client {
         return
       }
       
+      guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+        completionHandler(nil, "Issues communicating with server")
+        return
+      }
+      
       guard let data = data else {
         completionHandler(nil, "Failed to retrieve data from server.")
         return
@@ -116,13 +121,19 @@ class Client {
       
       do {
         guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-          completionHandler(false, nil)
+          completionHandler(nil, "Failed to retrieve Lists")
           return
         }
         
         if let errorMessage = json["errors"] as? String {
           completionHandler(nil, errorMessage)
         }
+        
+        guard statusCode >= 200 && statusCode < 300 else {
+          completionHandler(nil, "Currently experiencing issues with server.")
+          return
+        }
+        
         completionHandler(json, nil)
       } catch {
         completionHandler(nil, error.localizedDescription)

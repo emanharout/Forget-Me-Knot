@@ -76,6 +76,7 @@ class AddListViewController: UIViewController {
     let groceryList = GroceryList(name: name, description: description, items: selectedItems)
     
     client.upload(groceryList: groceryList) { (result, errorMessage) in
+
       DispatchQueue.main.async {
         guard errorMessage == nil else {
           self.displayAlert(with: "Upload Failed", and: errorMessage!, completionHandler: nil)
