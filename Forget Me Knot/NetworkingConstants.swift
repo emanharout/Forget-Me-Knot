@@ -16,7 +16,7 @@ struct Constants {
     static let GroceryListEndPath = "/api/v1/grocery_lists.json"
     
     static let AuthHeaderField = "Authorization"
-    static let AuthHeaderValue = "haroutunian_1989"
+    static let AuthHeaderValue = "haroutunian_1990"
     static let ContentHeaderField = "Content-Type"
     static let ContentHeaderValue = "application/json"
   }

@@ -115,6 +115,7 @@ class GroceryListsViewController: UIViewController {
       }
       
       guard let result = result as? [[String: Any]] else { return }
+      
       var groceryLists = [GroceryList]()
       
       for groceryListDictionary in result {
@@ -134,18 +135,8 @@ class GroceryListsViewController: UIViewController {
           groceryLists.append(groceryList)
         }
       }
-      
-      let lastIndexOfCurrentList = self.groceryLists.endIndex
-      let lastIndexOfNewList = groceryLists.endIndex
-      
-      if lastIndexOfCurrentList > 0 {
-        for index in lastIndexOfCurrentList...lastIndexOfNewList - 1 {
-          let list = groceryLists[index]
-          self.groceryLists.append(list)
-        }
-      } else {
-        self.groceryLists = groceryLists
-      }
+
+      self.groceryLists = groceryLists
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
@@ -188,7 +179,7 @@ extension GroceryListsViewController: UICollectionViewDelegate, UICollectionView
       selectedTab = (list: groceryList, index: indexPath.item, cell: cell)
       
       listNameLabel.text = selectedTab?.cell.groceryList?.name
-      listDescriptionLabel.text = selectedTab?.cell.groceryList?.name
+      listDescriptionLabel.text = selectedTab?.cell.groceryList?.description
       displayedItems = cell.groceryList?.items ?? []
       tableView.reloadData()
     }
@@ -225,7 +216,12 @@ extension GroceryListsViewController: AddListViewControllerDelegate {
     self.items = items
   }
   
-  func userDidCreateGroceryList() {
-    displayGroceryLists(completionHandler: nil)
+  func userDidCreate(groceryList: GroceryList) {
+    groceryLists.append(groceryList)
+    let itemsCount = collectionView.numberOfItems(inSection: 0)
+    let indexPath = IndexPath(item: itemsCount, section: 0)
+    collectionView.insertItems(at: [indexPath])
+    
+    hideEmptyListStackViewIfNeeded()
   }
 }

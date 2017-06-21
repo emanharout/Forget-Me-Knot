@@ -10,7 +10,7 @@ import UIKit
 
 protocol AddListViewControllerDelegate: class {
   func update(items: [Item])
-  func userDidCreateGroceryList()
+  func userDidCreate(groceryList: GroceryList)
 }
 
 class AddListViewController: UIViewController {
@@ -83,7 +83,7 @@ class AddListViewController: UIViewController {
           return
         }
         
-        self.delegate?.userDidCreateGroceryList()
+        self.delegate?.userDidCreate(groceryList: groceryList)
         _ = self.navigationController?.popViewController(animated: true)
       }
     }
