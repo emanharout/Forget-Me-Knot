@@ -4,7 +4,7 @@
 
 ## Intro
 
-[Forget Me Knot](http://emanleet.com/portfolio/forget-me-knot/ "Forget Me Knot") is a project I completed with an 11 hour time constraint. **Server is likely no longer active**, but I put this up anyway to demonstrate clean, iterative code written with a time constraint in mind. There are a few things that can be improved, but I thought I would leave it more or less the same since it shows what I can with a deadline.
+[Forget Me Knot](http://emanleet.com/portfolio/forget-me-knot/ "Forget Me Knot") is a project I completed with an 11 hour time constraint. **Server is likely no longer active**, but I put this up anyway to demonstrate clean, iterative code written with a time constraint in mind. There are a few things that can be improved, but I thought I would leave it more or less the same since it shows what I can do with a deadline.
 
 The app conforms to Apple's recommended MVC design pattern, allowing for a nice separation of concerns. It also has a networking layer that utilizes RESTful APIs to pull grocery items and post grocery lists. The UI is built using Auto Layout and Stack Views.
 
